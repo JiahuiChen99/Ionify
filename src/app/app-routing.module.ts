@@ -8,7 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/music-list/music-list.module').then( m => m.MusicListPageModule)
   },
   {
-    path: 'music-details',
+    path: 'music-details/:id',
     loadChildren: () => import('./pages/music-details/music-details.module').then( m => m.MusicDetailsPageModule)
   },
 ];
