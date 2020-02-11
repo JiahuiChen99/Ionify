@@ -1,9 +1,34 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>musicDetails</ion-title>
+    <div *ngIf="trackInfo != undefined">
+      <ion-item card *ngFor="let item of trackInfo">
+        <ion-title>{{ item.name }}</ion-title>
+      </ion-item>
+    </div>
+    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div *ngIf="trackInfo != undefined">
+          <ion-item card *ngFor="let item of trackInfo">
+              {{ item.name }}
+          </ion-item>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div *ngIf="trackInfo != undefined">
+        <ion-item card *ngFor="let item of trackInfo">
+          <img [src]="item.thumbnail" class="info-img">
+        </ion-item>
+        
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
