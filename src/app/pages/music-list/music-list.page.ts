@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-music-list',
   templateUrl: './music-list.page.html',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MusicListPage implements OnInit {
 
-  constructor() { }
+  trackList: Observable<any>;
+
+  constructor(private service: SallefyAPIService) { }
 
   ngOnInit() {
+  }
+
+  button(){
+     this.trackList = this.service.retrieveTracks();
+     
+     this.trackList.subscribe();
   }
 
 }
