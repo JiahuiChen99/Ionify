@@ -11,16 +11,19 @@ import { Observable } from 'rxjs';
 export class MusicListPage implements OnInit {
 
   trackList: Observable<any>;
-
+  tracks: any;
   constructor(private service: SallefyAPIService) { }
 
   ngOnInit() {
+    this.trackList = this.service.retrieveTracks();
+    this.trackList.subscribe(
+      data => {this.tracks = data;
+    });
   }
 
   button(){
      this.trackList = this.service.retrieveTracks();
      
-     this.trackList.subscribe();
   }
 
 }
