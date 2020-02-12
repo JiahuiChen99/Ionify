@@ -3,7 +3,6 @@
     <div *ngIf="trackInfo != undefined">
       
         <ion-title>{{ trackInfo.name }}</ion-title>
-      
     </div>
     
   </ion-toolbar>
@@ -33,6 +32,7 @@
       <ion-label class="endTime" color="light" *ngIf="duration == -1">--:--</ion-label>
       <ion-label class="endTime" color="light" *ngIf="duration != -1">{{ display_duration }}</ion-label>
     </div>
+
 
   </div>
 
