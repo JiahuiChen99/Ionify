@@ -9,7 +9,7 @@ export class SallefyAPIService {
 
   url = 'http://sallefy.eu-west-3.elasticbeanstalk.com/api/';
   // tslint:disable-next-line: max-line-length
-  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTU4MTU4NzEwMH0.J-tSMLfeBgmtmJu7TFxJNK1O0uzMDqfoHuDdHhP0DndA10Z9nGbDcT1IyWlgLb5lTgaj-YmHe8veOrWGCuDm-Q';
+  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MTY4MTkwNn0.DWjBHNcHKwP5OzH0-qRfxu7f2j3pFA3UK5LDqN_BodyVJwKBWHTn1yjTBd9LHT2FSh-TEoDb82o8vF6cML49SQ';
   
   
 
