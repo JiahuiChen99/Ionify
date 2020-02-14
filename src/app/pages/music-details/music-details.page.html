@@ -10,8 +10,7 @@
 
 <ion-content>
 
-  
-
+  <div [ngClass]="{ 'popover_class' : blur }">
   <div class="fixedContent">
     <ion-thumbnail [ngStyle]="{'background':'url('+ image +')'}"></ion-thumbnail>
   </div>
@@ -91,4 +90,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  </div>
 </ion-content>

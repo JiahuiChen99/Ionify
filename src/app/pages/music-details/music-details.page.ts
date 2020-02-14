@@ -34,6 +34,8 @@ export class MusicDetailsPage implements OnInit {
   get_duration_interval: any;
   display_position: any = '00:00';
   display_duration: any = '00:00';
+
+  blur = false;
   
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
@@ -198,9 +200,17 @@ export class MusicDetailsPage implements OnInit {
         component: SharingComponent,
         event: ev,
         animated: true,
-        showBackdrop: true
+        showBackdrop: true,
     });
+
+    this.blur = true;
+
+    popover.onDidDismiss().then(data => {
+      this.blur = false;
+    })
+
     return await popover.present();
-}
+  }
 
 }
+
