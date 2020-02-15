@@ -50,7 +50,7 @@ export class MusicDetailsPage implements OnInit {
       this.information = result;
       
       this.trackInfo = this.information.tracks[0];
-      console.log(this.trackInfo.url);
+      console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.prepareAudioFile();

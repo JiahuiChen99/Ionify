@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common//http';
 import { Media } from '@ionic-native/media/ngx';
 
 import { SharingComponent } from '../app/sharing/sharing.component';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   declarations: [AppComponent, SharingComponent],
@@ -23,6 +24,7 @@ import { SharingComponent } from '../app/sharing/sharing.component';
     SplashScreen,
     Media,
     SharingComponent,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
