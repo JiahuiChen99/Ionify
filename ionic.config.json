@@ -1,7 +1,8 @@
 {
   "name": "Ionify",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
