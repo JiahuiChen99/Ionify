@@ -12,7 +12,9 @@
 
   <div [ngClass]="{ 'popover_class' : blur }">
   <div class="fixedContent">
-    <ion-thumbnail [ngStyle]="{'background':'url('+ image +')'}"></ion-thumbnail>
+    <ion-thumbnail>
+      <img [src]="image" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+    </ion-thumbnail>
   </div>
 
   <div class="padding_Top">
