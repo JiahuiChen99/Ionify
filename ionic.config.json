@@ -1,5 +1,7 @@
 {
   "name": "Ionify",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
