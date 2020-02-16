@@ -38,7 +38,7 @@ export class SharingComponent implements OnInit {
 
   ngOnInit() {}
 
-  twitterShare(message) {
+  twitterShare() {
     this.share.shareViaTwitter("Provando mi App", "/assets/icon/favicon.png" , "https://res.cloudinary.com/jcarri/video/upload/v1569164191/sallefy/songs/60-70-80-90/The_Cranberries_-_Dreams_qefdnq.mp3").then(
       ()=>{ console.log("shareViaWhatsApp: Success");
      }).catch(() => {
