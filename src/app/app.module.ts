@@ -14,6 +14,7 @@ import { Media } from '@ionic-native/media/ngx';
 
 import { SharingComponent } from '../app/sharing/sharing.component';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { HTTP } from '@ionic-native/http/ngx'
 
 @NgModule({
   declarations: [AppComponent, SharingComponent],
@@ -25,6 +26,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     Media,
     SharingComponent,
     SocialSharing,
+    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
