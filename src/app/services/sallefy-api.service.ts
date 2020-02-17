@@ -11,14 +11,13 @@ export class SallefyAPIService {
 
   url = 'http://sallefy.eu-west-3.elasticbeanstalk.com/api/';
   // tslint:disable-next-line: max-line-length
-  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MTgzNDExMH0.KaLeq5NHOiC1u600R3SCGrQaqTrIF2bdIgnGlr_Sdpc5C14HbGzwPAsPfZKhUtBKiHhNq_S--fOrW0mYM-lzxw';
+  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjAxMzUyM30.anuphqkhZV1frJRVeeGs-nMzj1Khw58EyCTqCtNs06lgR7_YXkB-1KJTn2dxM-wvEe_KzE8VWEjxxXEGtJ8rWg';
   
   
 
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: 'Bearer ' + this.apiKey,
-      'Acces-Control-Allow-Origin': '*',
+      Authorization: 'Bearer ' + this.apiKey
     })
   };
   constructor(private http: HttpClient, private nativehttp: HTTP) { 
