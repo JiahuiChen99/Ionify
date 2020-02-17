@@ -7,14 +7,16 @@
 <ion-content>
   
       <!--<ion-button color="primary" (click) = "button()">Primary</ion-button>-->
+      <ion-searchbar [(ngModel)]="trackName" (ionChange)="searchTrack()"></ion-searchbar>
 
       <ion-list>
     
         <ion-item button *ngFor="let item of tracks" [routerLink]="['/', 'music-details', item.name]">
           
           <ion-avatar slot="start">
-            <img [src]="item.thumbnail" *ngIf="item.thumbnail != 'N/A'">
-          </ion-avatar>
+            <img [src]="item.thumbnail" onError="this.src='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'" >
+  
+            </ion-avatar>
     
           <ion-label text-wrap>
             <h2><b>{{ item.name }}</b></h2>

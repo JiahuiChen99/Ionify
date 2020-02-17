@@ -10,10 +10,11 @@
 
 <ion-content>
 
-  
-
+  <div [ngClass]="{ 'popover_class' : blur }">
   <div class="fixedContent">
-    <ion-thumbnail [ngStyle]="{'background':'url('+ image +')'}"></ion-thumbnail>
+    <ion-thumbnail>
+      <img [src]="image" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+    </ion-thumbnail>
   </div>
 
   <div class="padding_Top">
@@ -84,11 +85,13 @@
           <ion-button slot="start" fill="clear" color="light">
             <ion-icon name="flash" expand="icon-only" class="Iconsize_For_Rev"></ion-icon>
           </ion-button>
-          <ion-button slot="end" fill="clear" color="light">
+          <ion-button slot="end" (click)="sharing()" fill="clear" color="light">
             <ion-icon name="share" expand="icon-only" class="Iconsize_For_Rev"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  </div>
 </ion-content>

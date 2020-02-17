@@ -12,18 +12,25 @@ export class MusicListPage implements OnInit {
 
   trackList: Observable<any>;
   tracks: any;
+  //The name of the track to be queried
+  trackName: string = '';
+
   constructor(private service: SallefyAPIService) { }
 
   ngOnInit() {
     this.trackList = this.service.retrieveTracks();
     this.trackList.subscribe(
       data => {this.tracks = data;
+        console.log(this.tracks);
     });
   }
 
-  button(){
-     this.trackList = this.service.retrieveTracks();
-     
+  searchTrack(){
+     this.trackList = this.service.retrieveSpecificTrack(this.trackName);
+    
+     this.trackList.subscribe(
+       data =>{this.tracks = data.tracks;
+              console.log(this.tracks)})
   }
 
 }

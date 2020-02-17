@@ -1,4 +1,4 @@
-ion-content {
+  ion-content {
     --background: linear-gradient(to top, #060606, #00695c);
   }
   
@@ -130,3 +130,12 @@ ion-content {
   .padding_Top {
     padding-top: 24px;
   }
+
+
+  .popover_class {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+}

@@ -4,6 +4,9 @@ import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { Platform } from '@ionic/angular';
 
+import { SharingComponent } from '../../sharing/sharing.component';
+import { PopoverController } from '@ionic/angular';
+
 @Component({
   selector: 'app-music-details',
   templateUrl: './music-details.page.html',
@@ -32,7 +35,11 @@ export class MusicDetailsPage implements OnInit {
   display_position: any = '00:00';
   display_duration: any = '00:00';
 
-  constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService, private media: Media, private platform: Platform) { }
+  blur = false;
+  
+
+  constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
+     private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController) { }
 
   ngOnInit() {
     let songName = this.activatedRoute.snapshot.paramMap.get('id');
@@ -43,7 +50,7 @@ export class MusicDetailsPage implements OnInit {
       this.information = result;
       
       this.trackInfo = this.information.tracks[0];
-      console.log(this.trackInfo.url);
+      console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.prepareAudioFile();
@@ -186,4 +193,24 @@ export class MusicDetailsPage implements OnInit {
   openWebsite() {
     window.open(this.information.Website, '_blank');
   }
+
+
+  async sharing(ev: any) {
+    const popover = await this.popoverController.create({
+        component: SharingComponent,
+        event: ev,
+        animated: true,
+        showBackdrop: true,
+    });
+
+    this.blur = true;
+
+    popover.onDidDismiss().then(data => {
+      this.blur = false;
+    })
+
+    return await popover.present();
+  }
+
 }
+
