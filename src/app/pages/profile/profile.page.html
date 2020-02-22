@@ -32,7 +32,16 @@
         <ion-badge color="dark">45</ion-badge>
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-item>
+
+      <ion-slides [options]="slideOpts" #slide>
+        <ion-slide *ngFor="let grupo of newGames">
+          
+            <img [src]="grupo.image" alt="" (click)="print()">
+        
+        </ion-slide>
+      </ion-slides>
       
     </ion-card>
+    
   </div>
 </ion-content>
