@@ -9,9 +9,10 @@ import { HTTP } from '@ionic-native/http/ngx';
 })
 export class SallefyAPIService {
 
-  url = 'http://sallefy.eu-west-3.elasticbeanstalk.com/api/';
+  url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
+  //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
-  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjAxMzUyM30.anuphqkhZV1frJRVeeGs-nMzj1Khw58EyCTqCtNs06lgR7_YXkB-1KJTn2dxM-wvEe_KzE8VWEjxxXEGtJ8rWg';
+  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjQ1MzQ4MH0.RGJ9OCS-BiTFIv0XrBVTdLKt53H7Trs9mYZA3deyca8sOmFDF_q3wwBYVwmx84iE-Szr6FJ-uQtRmo9n4oT4fQ';
   
   
 
