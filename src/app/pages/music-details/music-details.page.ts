@@ -195,10 +195,9 @@ export class MusicDetailsPage implements OnInit {
   }
 
 
-  async sharing(ev: any) {
+  async sharing() {
     const popover = await this.popoverController.create({
         component: SharingComponent,
-        event: ev,
         animated: true,
         showBackdrop: true,
     });

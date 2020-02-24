@@ -1,0 +1,106 @@
+.header{
+    height: 180px;
+    background-color: #03A9F4;
+    width: 100%;
+    padding-top: 1px;
+}
+
+.header h2{
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.space-between{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 0px 20px;
+}
+
+.followers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.followers p{
+    color: white;
+    margin: 8px 0px 0px 0px;
+}
+
+.likes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.likes p{
+    color: white;
+    margin: 8px 0px 0px 0px;
+}
+
+.profile-image{
+    border-radius: 50%;
+    overflow: hidden;
+    height: 130px;
+    width: 130px;
+}
+
+.white-ring{
+    border: white solid 4px;
+    border-radius: 50%;
+    width: fit-content;
+}
+
+.blue-ring{
+    border: #1d8add solid 7px;
+    border-radius: 50%;
+    width: fit-content;
+}
+
+.logo-position{
+    display: flex;
+    justify-content: center;
+    margin-top: -80px;
+}
+
+.tracks-liked{
+    margin-top: 40px;
+}
+.tracks-liked h4{
+    //margin-top: 50px;
+    font-weight: bold;
+}
+
+span{
+    padding-left: 2px!important;
+    padding-right: 2px!important;
+    padding-top: 2px!important;
+    padding-bottom: 2px!important;
+    width: 85px!important;
+    height: 70px!important;
+  
+  }
+  ion-slide:hover{
+    //background: rgba(205, 9, 9, 0.43);
+    cursor: pointer;
+  
+  }
+  span img{
+    width: 55px;
+    height: 55px;
+  }
+  
+  
+  ion-slide {
+    width: 90px!important;
+    height: 85px!important;
+    background-color:  #FFF;
+    float: left;
+    margin-left: 1.5px!important;
+    margin-right: 1.5px!important;
+    border-radius: 50px!important;
+  }
+  ion-slides{
+    //background-color:  rgba(194, 193, 194, 0.52);
+  }

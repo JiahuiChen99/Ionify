@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'music-list', pathMatch: 'full' },
+  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
   {
-    path: 'music-list',
-    loadChildren: () => import('./pages/music-list/music-list.module').then( m => m.MusicListPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
   },
   {
     path: 'music-details/:id',
     loadChildren: () => import('./pages/music-details/music-details.module').then( m => m.MusicDetailsPageModule)
+  },
+  {
+    path: 'likes',
+    loadChildren: () => import('./pages/likes/likes.module').then( m => m.LikesPageModule)
   },
 ];
 

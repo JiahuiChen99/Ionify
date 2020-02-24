@@ -9,9 +9,10 @@ import { HTTP } from '@ionic-native/http/ngx';
 })
 export class SallefyAPIService {
 
-  url = 'http://sallefy.eu-west-3.elasticbeanstalk.com/api/';
+  url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
+  //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
-  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjAxMzUyM30.anuphqkhZV1frJRVeeGs-nMzj1Khw58EyCTqCtNs06lgR7_YXkB-1KJTn2dxM-wvEe_KzE8VWEjxxXEGtJ8rWg';
+  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjYxNzEyMH0.5aRaYnJQVzbCVB0Zlz2kj7SlOitbgeo4VFMszb2HLEi5lh980THjQ8ctq2vMvHfn3WAtMTFx3PlULQ1OF0tSLw';
   
   
 
@@ -32,17 +33,7 @@ export class SallefyAPIService {
     return this.http.get(this.url + 'search?keyword=' + songName, this.httpOptions);
   }
 
-
-  /*retrieveTracks(): Observable<any> {
-
-    let call = this.nativehttp.get( this.url + 'tracks', {}, {Authorization: 'Bearer ' + this.apiKey});
-
-    return from(call);
+  retrieveLikedTracks(): Observable<any>{
+    return this.http.get(this.url + 'me/tracks/liked', this.httpOptions);
   }
-
-  retrieveSpecificTrack(songName: String): Observable<any>{
-    let call = this.nativehttp.get(this.url + 'search?keyword=' + songName, {}, {Authorization: 'Bearer ' + this.apiKey});
-    
-    return from(call);
-  }*/
 }
