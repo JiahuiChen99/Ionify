@@ -1,0 +1,27 @@
+
+
+ion-card{
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    .imageStyle{
+        //display:  inline-block;
+        border-radius: 10px;
+        img{
+            object-fit: cover !important;
+            //max-width: 100%;
+            border-radius: 10px;
+            margin: 0 !important;
+        }
+    }
+  }
+
+.columns{
+    column-count: 3;
+}
+
+.column{
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 5px;
+}

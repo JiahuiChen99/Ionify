@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'music-details/:id',
     loadChildren: () => import('./pages/music-details/music-details.module').then( m => m.MusicDetailsPageModule)
   },
+  {
+    path: 'likes',
+    loadChildren: () => import('./pages/likes/likes.module').then( m => m.LikesPageModule)
+  },
 ];
 
 @NgModule({

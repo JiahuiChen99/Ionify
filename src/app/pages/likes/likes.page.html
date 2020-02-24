@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tracks liked by you</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="columns" >
+    <div class="column" *ngFor="let item of likedTracks" [routerLink]="['/', 'music-details', item.name]">
+          <ion-card>
+
+            <div class="imageStyle">
+              <img [src]="item.thumbnail"  onError="this.src='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+            </div>
+            
+            <ion-card-header text-center>
+              {{item.name}}
+            </ion-card-header>
+              
+          </ion-card>
+              
+    </div>
+  </div>
+
+
+</ion-content>
