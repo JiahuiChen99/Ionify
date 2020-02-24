@@ -12,7 +12,7 @@ export class SallefyAPIService {
   url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
   //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
-  apiKey = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU4MjYxNzEyMH0.5aRaYnJQVzbCVB0Zlz2kj7SlOitbgeo4VFMszb2HLEi5lh980THjQ8ctq2vMvHfn3WAtMTFx3PlULQ1OF0tSLw';
+  apiKey: string;
   
   
 
@@ -21,7 +21,25 @@ export class SallefyAPIService {
       Authorization: 'Bearer ' + this.apiKey
     })
   };
+
+  httpOptions2 = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
   constructor(private http: HttpClient, private nativehttp: HTTP) { 
+  }
+
+
+
+  login(body: any){
+
+    console.log(body);
+    this.http.post(this.url + 'authenticate', JSON.stringify(body), this.httpOptions2).subscribe(
+      data => {console.log(data);
+        this.apiKey = data.toString();
+      }
+    );
   }
 
   retrieveTracks(): Observable<any> {
