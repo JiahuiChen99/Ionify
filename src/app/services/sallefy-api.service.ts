@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, BehaviorSubject } from 'rxjs';
 
 import { HTTP } from '@ionic-native/http/ngx';
 
@@ -13,7 +13,7 @@ export class SallefyAPIService {
   //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
   apiKey: string;
-  
+  authenticationState = new BehaviorSubject(false);
   
 
   httpOptions = {
@@ -38,8 +38,20 @@ export class SallefyAPIService {
     this.http.post(this.url + 'authenticate', JSON.stringify(body), this.httpOptions2).subscribe(
       data => {console.log(data);
         this.apiKey = data.toString();
+        if(data){
+          this.authenticationState.next(true);
+        }
       }
     );
+  }
+
+  logout(){
+    this.apiKey = null;
+    this.authenticationState.next(false);
+  }
+
+  isAuthenticated(){
+    return this.authenticationState.value;
   }
 
   retrieveTracks(): Observable<any> {
