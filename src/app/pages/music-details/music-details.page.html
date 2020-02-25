@@ -5,7 +5,7 @@
     </ion-buttons>
     <div *ngIf="trackInfo != undefined">
       
-        <ion-title>{{ trackInfo.name }}</ion-title>
+        <ion-title class="ion-text-center">{{ trackInfo.name }}</ion-title>
     </div>
     
   </ion-toolbar>
@@ -23,11 +23,12 @@
   <div class="padding_Top">
     <div class="fixedContent">
       <div *ngIf="trackInfo != undefined">
-        
+        <h3>
           {{ trackInfo.name }}
+        </h3>
         
       </div>
-      <p text-uppercase color="light" class="pUser microsoft marquee ">HOLAAAAA</p>
+      <p class="ion-text-uppercase" color="light" class="pUser microsoft marquee ">HOLAAAAA</p>
     </div>
     <ion-range min="0" max="{{duration}}" [(ngModel)]="position" color="light">
     </ion-range>
@@ -76,7 +77,7 @@
 
           <div>
             <ion-button fill="clear" color="light">
-              <ion-icon name="remove-circle-outline" class="Iconsize_For_Rev"></ion-icon>
+              <ion-icon name="remove-circle-outline" (click)="stop()" class="Iconsize_For_Rev"></ion-icon>
             </ion-button>
           </div>
         </div>

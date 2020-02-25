@@ -39,7 +39,7 @@ export class ProfilePage implements OnInit {
 
 
   logout(){
-    this.service.logout;
+    this.service.logout();
   }
   goToLikesPage(item){
     console.log('CARD CLICKED');
