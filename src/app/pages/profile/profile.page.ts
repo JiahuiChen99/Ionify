@@ -36,13 +36,18 @@ export class ProfilePage implements OnInit {
       slideShadows: true,
     }
   }
-goToLikesPage(item){
-    console.log('CARD CLICKED');
-}
-    isEnd(){ 
-    }
 
-    print() {
-        console.log("Hello");
-    }
+
+  logout(){
+    this.service.logout;
+  }
+  goToLikesPage(item){
+    console.log('CARD CLICKED');
+  }
+  isEnd(){ 
+  }
+
+  print() {
+      console.log("Hello");
+  }
 }
