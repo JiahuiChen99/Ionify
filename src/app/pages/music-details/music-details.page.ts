@@ -16,7 +16,7 @@ export class MusicDetailsPage implements OnInit {
 
   information: any;
   trackInfo: any;
-  
+  trackLiked: any;
 
   title: any;
   artist: any;
@@ -48,19 +48,19 @@ export class MusicDetailsPage implements OnInit {
     //.subscribe(result => ) means that the Observable is a success
     this.service.retrieveSpecificTrack(songName).subscribe(result => {
       this.information = result;
+
       
       this.trackInfo = this.information.tracks[0];
-      console.log(this.trackInfo);
+      this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
+        console.log(Object.values(data));
+        this.trackLiked = Object.values(data);
+      });
+      //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.prepareAudioFile();
-      
+
     });
-
-
-    
-
-    
   }
 
   prepareAudioFile() {

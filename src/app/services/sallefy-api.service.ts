@@ -75,6 +75,10 @@ export class SallefyAPIService {
     return this.authenticationState.value;
   }
 
+  isTrackLiked(id: number): Observable<any>{
+    return this.http.get( this.url + 'tracks/' + id + '/like', this.httpOptions);
+  }
+
   retrieveTracks(): Observable<any> {
     return this.http.get( this.url + 'tracks', this.httpOptions);
   }
