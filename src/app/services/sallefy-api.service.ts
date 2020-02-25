@@ -12,7 +12,7 @@ export class SallefyAPIService {
   url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
   //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
-  apiKey: string;
+  apiKey: any;
   authenticationState = new BehaviorSubject(false);
   
 
@@ -36,8 +36,16 @@ export class SallefyAPIService {
 
     console.log(body);
     this.http.post(this.url + 'authenticate', JSON.stringify(body), this.httpOptions2).subscribe(
-      data => {console.log(data);
-        this.apiKey = data.toString();
+      data => {
+        console.log(Object.values(data))
+        this.apiKey = Object.values(data);
+        console.log('API KEY: ' + this.apiKey)
+        
+        this.httpOptions.headers = new HttpHeaders({
+          Authorization: 'Bearer ' + this.apiKey
+        })
+        
+        console.log('HEADER: ' + this.httpOptions.headers)
         if(data){
           this.authenticationState.next(true);
         }
