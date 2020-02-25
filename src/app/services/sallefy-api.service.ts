@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 
 import { HTTP } from '@ionic-native/http/ngx';
+import { ToastController } from '@ionic/angular';
+import { error } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,8 @@ export class SallefyAPIService {
       'Content-Type': 'application/json'
     })
   };
-  constructor(private http: HttpClient, private nativehttp: HTTP) { 
+
+  constructor(private http: HttpClient, private nativehttp: HTTP, public toastController: ToastController) { 
   }
 
 
@@ -36,7 +39,7 @@ export class SallefyAPIService {
 
     console.log(body);
     this.http.post(this.url + 'authenticate', JSON.stringify(body), this.httpOptions2).subscribe(
-      data => {
+      async data => {
         console.log(Object.values(data))
         this.apiKey = Object.values(data);
         console.log('API KEY: ' + this.apiKey)
@@ -49,8 +52,18 @@ export class SallefyAPIService {
         if(data){
           this.authenticationState.next(true);
         }
+      }, error => {
+        this.presentToast();
       }
     );
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Login Failed - Your credentials are wrong',
+      duration: 2000
+    });
+    toast.present();
   }
 
   logout(){
