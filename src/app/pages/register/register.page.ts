@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPage implements OnInit {
 
-  constructor() { }
+  registerCredentials = { username:'', lastName:'' ,email:'',password:'', confirmPassword:'',  };
+
+  constructor(private service: SallefyAPIService) { }
 
   ngOnInit() {
   }
 
+
+  register(){
+    this.service.register();
+  }
 }

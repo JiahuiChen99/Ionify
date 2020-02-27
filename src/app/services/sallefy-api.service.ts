@@ -71,6 +71,10 @@ export class SallefyAPIService {
     this.authenticationState.next(false);
   }
 
+  register(){
+
+  }
+
   isAuthenticated(){
     return this.authenticationState.value;
   }

@@ -1,9 +1,46 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <form (ngSubmit)="register()" #registerForm="ngForm">
+    <ion-item>
+      <ion-label><b>UserName:</b></ion-label>
+      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>LastName:</b></ion-label>
+      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.LastName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>Email:</b></ion-label>
+      <ion-input clearInput="true" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>Password:</b></ion-label>
+      <ion-input clearInput="true" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>Confirm Password:</b></ion-label>
+      <ion-input clearInput="true" name="password" [(ngModel)]="registerCredentials.confirmPassword" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>MM DD YY</b></ion-label>
+      <ion-datetime displayFormat="MM DD YYYY" placeholder="Select Date"></ion-datetime>
+    </ion-item>
+
+    <ion-button shape="round"  expand="block" type="submit"  [disabled]="registerForm.invalid">Register</ion-button>
+  </form>
 
 </ion-content>
