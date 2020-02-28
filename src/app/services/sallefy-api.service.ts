@@ -12,7 +12,6 @@ import { error } from 'util';
 export class SallefyAPIService {
 
   url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
-  //http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/
   // tslint:disable-next-line: max-line-length
   apiKey: any;
   authenticationState = new BehaviorSubject(false);
