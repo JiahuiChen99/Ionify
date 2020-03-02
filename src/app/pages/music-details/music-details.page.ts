@@ -211,5 +211,11 @@ export class MusicDetailsPage implements OnInit {
     return await popover.present();
   }
 
+  like(){
+    this.service.likeTrack(this.trackInfo.id).subscribe(data => {
+      console.log(Object.values(data));
+      this.trackLiked = Object.values(data);
+    });
+  }
 }
 

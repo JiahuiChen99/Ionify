@@ -82,6 +82,11 @@ export class SallefyAPIService {
     return this.http.get( this.url + 'tracks/' + id + '/like', this.httpOptions);
   }
 
+  likeTrack(id: number): Observable<any>{
+    console.log(this.httpOptions);
+    return this.http.put(this.url + 'tracks/' + id + '/like', null,this.httpOptions);
+  }
+
   retrieveTracks(): Observable<any> {
     return this.http.get( this.url + 'tracks', this.httpOptions);
   }
