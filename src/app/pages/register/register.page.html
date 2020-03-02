@@ -17,7 +17,7 @@
 
     <ion-item>
       <ion-label><b>LastName:</b></ion-label>
-      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.LastName"></ion-input>
+      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.lastName"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -41,6 +41,13 @@
     </ion-item>
 
     
+
+    <ion-card>
+      <ion-card-content>
+        <img [src]="base64Image">
+      </ion-card-content>
+    </ion-card>
+
       <ion-button shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
         <ion-icon slot="start" name="camera"></ion-icon>
         Select Image
@@ -48,23 +55,5 @@
     
     <ion-button shape="round"  expand="block" type="submit"  [disabled]="registerForm.invalid">Register</ion-button>
   </form>
-
-  
-  <ion-list>
-    <ion-item *ngFor="let img of images; index as pos" text-wrap>
-      <ion-thumbnail slot="start">
-        <ion-img [src]="img.path"></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        {{ img.name }}
-      </ion-label>
-      <ion-button slot="end" fill="clear" (click)="startUpload(img)">
-        <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
 
 </ion-content>
