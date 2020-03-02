@@ -24,7 +24,9 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.styleBlackTranslucent();
+
       this.splashScreen.hide();
 
       this.authenticationService.authenticationState.subscribe(state =>{

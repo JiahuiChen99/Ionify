@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 
 import { SharingComponent } from '../../sharing/sharing.component';
 import { PopoverController } from '@ionic/angular';
-import { Downloader, DownloadRequest } from '@ionic-native/downloader/ngx';
+import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 
 @Component({
   selector: 'app-music-details',
@@ -41,7 +41,7 @@ export class MusicDetailsPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
      private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
-     private downloader: Downloader) { }
+     private downloader: Downloader, public toastController: ToastController) { }
 
   ngOnInit() {
     let songName = this.activatedRoute.snapshot.paramMap.get('id');
@@ -222,19 +222,34 @@ export class MusicDetailsPage implements OnInit {
   downloadTrack(){
     var request: DownloadRequest = {
       uri: this.play_The_track,
-      title: 'MyDownload',
+      title: this.trackInfo.name,
       description: '',
       mimeType: '',
+      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
       visibleInDownloadsUi: true,
       destinationInExternalFilesDir: {
           dirType: 'Downloads',
-          subPath: 'Ionify.apk'
+          subPath: this.trackInfo.name + '.mp3'
       }
     };
 
     this.downloader.download(request)
-    .then((location: string) => console.log('File downloaded at:'+location))
-    .catch((error: any) => console.error(error));
+    .then((location: string) => this.presentToast('File downloaded at:'+location))
+    .catch((error: any) => this.presentToast(JSON.stringify(error)));
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      buttons: [{
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
   }
 }
 
