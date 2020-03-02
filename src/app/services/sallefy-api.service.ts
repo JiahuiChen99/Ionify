@@ -83,7 +83,6 @@ export class SallefyAPIService {
   }
 
   likeTrack(id: number): Observable<any>{
-    console.log(this.httpOptions);
     return this.http.put(this.url + 'tracks/' + id + '/like', null,this.httpOptions);
   }
 
