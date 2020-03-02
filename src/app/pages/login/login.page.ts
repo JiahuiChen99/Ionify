@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,12 @@ export class LoginPage implements OnInit {
     "password": this.password,
     "rememberMe": true,
     "username": this.username
-};
-
-  constructor(private service: SallefyAPIService) { }
+  };
+  
+  subscribe: any;
+  constructor(private service: SallefyAPIService, public platform: Platform) { 
+    this.subscribe = this.platform.backButton.subscribe(() => navigator["app"].exitApp());
+  }
 
   ngOnInit() {
   }

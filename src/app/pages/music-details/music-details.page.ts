@@ -240,14 +240,7 @@ export class MusicDetailsPage implements OnInit {
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      buttons: [{
-          text: 'Done',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
+      duration: 4000
     });
     toast.present();
   }
