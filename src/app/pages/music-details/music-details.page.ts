@@ -16,7 +16,7 @@ export class MusicDetailsPage implements OnInit {
 
   information: any;
   trackInfo: any;
-  trackLiked: any;
+  trackLiked: boolean;
 
   title: any;
   artist: any;
@@ -53,7 +53,7 @@ export class MusicDetailsPage implements OnInit {
       this.trackInfo = this.information.tracks[0];
       this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
         console.log(Object.values(data));
-        this.trackLiked = Object.values(data);
+        this.trackLiked = data.liked;
       });
       //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
@@ -213,8 +213,9 @@ export class MusicDetailsPage implements OnInit {
 
   like(){
     this.service.likeTrack(this.trackInfo.id).subscribe(data => {
-      console.log(Object.values(data));
-      this.trackLiked = Object.values(data);
+      //this.trackLiked = (Object.values(data) == "true");
+      this.trackLiked = data.liked;
+      console.log( this.trackLiked);
     });
   }
 }
