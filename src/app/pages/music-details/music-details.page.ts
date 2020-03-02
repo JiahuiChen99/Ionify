@@ -6,6 +6,7 @@ import { Platform } from '@ionic/angular';
 
 import { SharingComponent } from '../../sharing/sharing.component';
 import { PopoverController } from '@ionic/angular';
+import { Downloader, DownloadRequest } from '@ionic-native/downloader/ngx';
 
 @Component({
   selector: 'app-music-details',
@@ -39,17 +40,16 @@ export class MusicDetailsPage implements OnInit {
   
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
-     private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController) { }
+     private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
+     private downloader: Downloader) { }
 
   ngOnInit() {
     let songName = this.activatedRoute.snapshot.paramMap.get('id');
- 
     // Get the information from the API
     //.subscribe(result => ) means that the Observable is a success
     this.service.retrieveSpecificTrack(songName).subscribe(result => {
       this.information = result;
 
-      
       this.trackInfo = this.information.tracks[0];
       this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
         console.log(Object.values(data));
@@ -217,6 +217,24 @@ export class MusicDetailsPage implements OnInit {
       this.trackLiked = data.liked;
       console.log( this.trackLiked);
     });
+  }
+
+  downloadTrack(){
+    var request: DownloadRequest = {
+      uri: this.play_The_track,
+      title: 'MyDownload',
+      description: '',
+      mimeType: '',
+      visibleInDownloadsUi: true,
+      destinationInExternalFilesDir: {
+          dirType: 'Downloads',
+          subPath: 'Ionify.apk'
+      }
+    };
+
+    this.downloader.download(request)
+    .then((location: string) => console.log('File downloaded at:'+location))
+    .catch((error: any) => console.error(error));
   }
 }
 

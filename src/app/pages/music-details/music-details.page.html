@@ -86,7 +86,7 @@
     <ion-row>
       <ion-col>
         <ion-item lines="none" class="transparent_Item">
-          <ion-button slot="start" fill="clear" color="light">
+          <ion-button slot="start" (click)="downloadTrack()" fill="clear" color="light">
             <ion-icon name="cloud-download" expand="icon-only" class="Iconsize_For_Rev"></ion-icon>
           </ion-button>
           <ion-button slot="end" (click)="sharing()" fill="clear" color="light">
