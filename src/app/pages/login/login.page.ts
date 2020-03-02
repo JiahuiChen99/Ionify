@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +20,12 @@ export class LoginPage implements OnInit {
   };
   
   subscribe: any;
-  constructor(private service: SallefyAPIService, public platform: Platform) { 
-    this.subscribe = this.platform.backButton.subscribe(() => navigator["app"].exitApp());
+  constructor(private service: SallefyAPIService, public platform: Platform, private router: Router) { 
+    this.subscribe = this.platform.backButton.subscribe(() => {
+      if(this.router.isActive('/login', true)){
+        navigator["app"].exitApp();
+      }
+    });
   }
 
   ngOnInit() {
