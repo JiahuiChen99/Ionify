@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@capacitor/core": "1.5.0",
+    "@cloudinary/angular-5.x": "^1.2.0-rc.0",
     "@ionic-native/camera": "^5.22.0",
     "@ionic-native/core": "^5.21.5",
     "@ionic-native/downloader": "^5.22.0",
@@ -34,6 +35,7 @@
     "@ionic/angular": "^4.7.1",
     "@ionic/lab": "^3.1.0",
     "@ionic/storage": "^2.2.0",
+    "cloudinary-core": "^2.8.1",
     "cordova-android": "^8.1.0",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-camera": "^4.1.0",
@@ -45,6 +47,7 @@
     "cordova-sqlite-storage": "^4.0.0",
     "core-js": "^2.5.4",
     "integrator-cordova-plugin-downloader": "^1.1.0",
+    "ng2-file-upload": "^1.4.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
