@@ -5,9 +5,10 @@ import { Observable, from, BehaviorSubject } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ToastController } from '@ionic/angular';
 import { error } from 'util';
+import { CloudinaryApiService } from '../services/cloudinary-api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SallefyAPIService {
 
@@ -29,7 +30,7 @@ export class SallefyAPIService {
     })
   };
 
-  constructor(private http: HttpClient, private nativehttp: HTTP, public toastController: ToastController) { 
+  constructor(private http: HttpClient, private nativehttp: HTTP, public toastController: ToastController, private cloudinary: CloudinaryApiService) { 
   }
 
 
@@ -70,8 +71,8 @@ export class SallefyAPIService {
     this.authenticationState.next(false);
   }
 
-  register(){
-
+  register(image: string){
+    this.cloudinary.uploadProfileImage(image);
   }
 
   isAuthenticated(){
