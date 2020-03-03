@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
+import { FileUploadModule  } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    FileUploadModule,
     RegisterPageRoutingModule
   ],
   declarations: [RegisterPage]

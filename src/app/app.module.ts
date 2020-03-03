@@ -22,6 +22,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 
+import { FileUploadModule } from "ng2-file-upload";
 
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
@@ -35,6 +36,7 @@ import { Cloudinary } from 'cloudinary-core';
     AppRoutingModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
+    FileUploadModule,
     CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'yumenokko',
                                              api_key: '197131348377583',
                                              api_secret: 'iFfogcymcyWxAK5KNeYQ9ups2PY' } as CloudinaryConfiguration)],

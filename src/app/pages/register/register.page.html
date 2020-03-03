@@ -51,14 +51,14 @@
         <img [src]="base64Image">
       </ion-card-content>
     </ion-card>
-    
 
-      <ion-button shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
+
+      <ion-button type="file" ng2FileSelect [uploader]="uploader" shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
         <ion-icon slot="start" name="camera"></ion-icon>
         Select Image
       </ion-button>
     
-    <ion-button shape="round"  expand="block" type="submit"  [disabled]="registerForm.invalid">Register</ion-button>
+    <ion-button shape="round"  expand="block" type="submit"  (click)="register()" [disabled]="registerForm.invalid">Register</ion-button>
   </form>
 
 </ion-content>
