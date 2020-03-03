@@ -11,6 +11,10 @@
 
   <form (ngSubmit)="register()" #registerForm="ngForm">
     <ion-item>
+      <ion-label><b>Login:</b></ion-label>
+      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.login" required></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label><b>UserName:</b></ion-label>
       <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
     </ion-item>
@@ -47,6 +51,7 @@
         <img [src]="base64Image">
       </ion-card-content>
     </ion-card>
+    
 
       <ion-button shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
         <ion-icon slot="start" name="camera"></ion-icon>
