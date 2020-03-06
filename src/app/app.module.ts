@@ -26,6 +26,7 @@ import { FileUploadModule } from "ng2-file-upload";
 
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx'
 
 @NgModule({
   declarations: [AppComponent, SharingComponent],
@@ -52,6 +53,7 @@ import { Cloudinary } from 'cloudinary-core';
     File,
     WebView,
     FilePath,
+    FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

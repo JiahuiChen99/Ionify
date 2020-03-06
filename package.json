@@ -26,6 +26,7 @@
     "@ionic-native/downloader": "^5.22.0",
     "@ionic-native/file": "^5.22.0",
     "@ionic-native/file-path": "^5.22.0",
+    "@ionic-native/file-transfer": "^5.22.0",
     "@ionic-native/http": "^5.21.5",
     "@ionic-native/ionic-webview": "^5.22.0",
     "@ionic-native/media": "^5.21.5",
@@ -97,7 +98,9 @@
       "cordova-plugin-media": {},
       "cordova-plugin-file": {},
       "integrator-cordova-plugin-downloader": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-filepath": {},
+      "cordova-plugin-file-transfer": {}
     },
     "platforms": [
       "browser",
