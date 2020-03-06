@@ -10,7 +10,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx'
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
   selector: 'app-register',
@@ -36,9 +36,11 @@ export class RegisterPage implements OnInit {
     
   };
 
+  base64: Base64;
+
   constructor(private service: SallefyAPIService, private camera: Camera, private file: File, private storage: Storage,
               private actionSheetController: ActionSheetController, private toastController: ToastController, public filepath: FilePath, private transfer: FileTransfer,
-              private webview: WebView, private sanitizer: DomSanitizer) { }
+              private webview: WebView, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
    this.base64Image = '../assets/img/user.jpg';
@@ -86,9 +88,18 @@ export class RegisterPage implements OnInit {
 
     this.camera.getPicture(options).then((imageData) => {
 
-        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      if( sourceType == this.camera.PictureSourceType.PHOTOLIBRARY){
+        
+        this.pathURL = imageData;
+        //const tempFilename = imageData.substr(imageData.lastIndexOf('/') + 1);
+        
+        this.base64.encodeFile(this.pathURL).then((base64File: string) => {
+          this.base64Image = base64File});
 
-        // Extract just the filename. Result example: cdv_photo_003.jpg
+        console.log('URL: ' + this.base64Image);
+
+        }else{
+          // Extract just the filename. Result example: cdv_photo_003.jpg
         const tempFilename = imageData.substr(imageData.lastIndexOf('/') + 1);
 
         // Now, the opposite. Extract the full path, minus filename. 
@@ -107,8 +118,13 @@ export class RegisterPage implements OnInit {
         // Result example: file:///var/mobile/Containers/Data/Application
         // /E4A79B4A-E5CB-4E0C-A7D9-0603ECD48690/Library/NoCloud/cdv_photo_003.jpg
         this.pathURL = newBaseFilesystemPath + tempFilename;
+        
+        this.base64.encodeFile(this.pathURL).then((base64File: string) => {
+          this.base64Image = base64File});
 
-        this.displayImage = this.webview.convertFileSrc(this.pathURL);
+        console.log('URL: ' + this.base64Image);
+      }
+        
         
     } , (error) => {
         this.presentToast('Error selecting the image: ' + JSON.parse(error));
@@ -132,6 +148,8 @@ export class RegisterPage implements OnInit {
 
     fileTransfer.upload(this.pathURL, serverurl, options).then((data) => {
        this.presentToast('Uploaded!')
+       this.base64Image = JSON.parse(data.response).secure_url;
+       console.log(JSON.parse(data.response).secure_url);
       }, (err)  =>
       console.log('HELLO::' + JSON.stringify(err)
       ));
