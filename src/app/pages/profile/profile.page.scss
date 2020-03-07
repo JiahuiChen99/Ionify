@@ -108,3 +108,11 @@ span{
   ion-slides{
     //background-color:  rgba(194, 193, 194, 0.52);
   }
+
+  ion-refresher ion-refresher-content {
+    --color:rgb(255, 15, 15) !important;
+    
+    .refresher-pullingText, .refresher-refreshingText, .refresher-refreshing-icon, .refresher-pulling-icon {
+      color: rgb(0, 238, 255) !important;
+    }
+  }

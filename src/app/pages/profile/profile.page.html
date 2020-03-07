@@ -1,16 +1,26 @@
 <ion-content>
+  
+  <ion-refresher  class="spinner" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="danger"
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="dots"
+      refreshingText="Refreshing">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="header">
-    <h2>Yumenokko</h2>
+    <h2>{{username}}</h2>
 
     <div class="space-between">
       <div class="followers">
-        <ion-chip outline="true" color="dark">45</ion-chip>
+        <ion-chip outline="true" color="dark">{{followers}}</ion-chip>
         <p>Followers</p>
       </div>
 
       <div class="likes">
-        <ion-chip outline="true" color="dark">100</ion-chip>
-        <p>Likes</p>
+        <ion-chip outline="true" color="dark">{{following}}</ion-chip>
+        <p>Following</p>
       </div>
     </div>
       
@@ -18,7 +28,7 @@
       <div class="blue-ring">
         <div class="white-ring">
           <div class="profile-image">
-            <img src="https://vignette.wikia.nocookie.net/drama/images/1/16/WatanabeMayu2018.png/revision/latest/scale-to-width-down/340?cb=20190510030849&path-prefix=es">
+            <img [src]="profileImage" onError="this.src = 'https://vignette.wikia.nocookie.net/drama/images/1/16/WatanabeMayu2018.png/revision/latest/scale-to-width-down/340?cb=20190510030849&path-prefix=es'">
           </div>
         </div>
       </div>
@@ -29,7 +39,7 @@
     <ion-card>
       <ion-item [routerLink]="['/', 'likes']" mode="ios" routerDirection="forward">
         <h4>Tracks liked by you</h4>
-        <ion-button slot="end" fill="clear" color="">45</ion-button>
+        <ion-button slot="end" fill="clear" color="">{{likesNum}}</ion-button>
       </ion-item>
 
       <ion-slides [options]="slideOpts" #slide>

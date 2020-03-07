@@ -98,4 +98,9 @@ export class SallefyAPIService {
   retrieveLikedTracks(): Observable<any>{
     return this.http.get(this.url + 'me/tracks/liked', this.httpOptions);
   }
+
+
+  getUser(){
+    return this.http.get(this.url + 'account', this.httpOptions);
+  }
 }
