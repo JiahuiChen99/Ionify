@@ -11,15 +11,17 @@
 
   <div class="columns" >
     <div class="column" *ngFor="let item of likedTracks" [routerLink]="['/', 'music-details', item.name]">
-          <ion-card>
+          <ion-card mode="ios">
 
             <div class="imageStyle">
               <img [src]="item.thumbnail"  onError="this.src='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
             </div>
             
-            <ion-card-header text-center>
-              {{item.name}}
-            </ion-card-header>
+              <ion-card-header text-center mode="ios">
+                <div class="title">
+                  {{item.name}}
+                </div>
+              </ion-card-header>
               
           </ion-card>
               

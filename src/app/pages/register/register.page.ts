@@ -61,21 +61,28 @@ export class RegisterPage implements OnInit {
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
         header: 'Select Image source',
+        mode: 'ios',
+        animated: true,
+        translucent: true,
+        cssClass: 'example',
         buttons: [{
                 text: 'Load from Library',
+                icon: 'images',
                 handler: () => {
                     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
                 }
             },
             {
                 text: 'Use Camera',
+                icon: 'aperture',
                 handler: () => {
                     this.takePicture(this.camera.PictureSourceType.CAMERA);
                 }
             },
             {
                 text: 'Cancel',
-                role: 'cancel'
+                role: 'cancel',
+                cssClass: 'myActionSheetBtnStyle'
             }
         ]
     });

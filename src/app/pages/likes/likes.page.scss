@@ -1,20 +1,35 @@
-
+ion-content {
+    --background: linear-gradient(to top, #060606, #2980b9);
+  }
+  
+  ion-toolbar {
+    --background: #2980b9;
+  }
 
 ion-card{
     display: flex;
     flex-direction: column;
     margin: 0 !important;
+    
     .imageStyle{
         //display:  inline-block;
         border-radius: 10px;
         img{
             object-fit: cover !important;
             //max-width: 100%;
-            border-radius: 10px;
+            border-radius: 9px;
             margin: 0 !important;
         }
     }
   }
+
+.title{
+    color: white;
+}
+ 
+.text-color{
+    background-color: green($color: #e22e2e);
+}
 
 .columns{
     column-count: 3;

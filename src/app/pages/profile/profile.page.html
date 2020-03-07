@@ -27,16 +27,15 @@
 
   <div class="tracks-liked">
     <ion-card>
-      <ion-item [routerLink]="['/', 'likes']" routerDirection="forward">
+      <ion-item [routerLink]="['/', 'likes']" mode="ios" routerDirection="forward">
         <h4>Tracks liked by you</h4>
-        <ion-badge color="dark">45</ion-badge>
-        <ion-icon slot="end"></ion-icon>
+        <ion-button slot="end" fill="clear" color="">45</ion-button>
       </ion-item>
 
       <ion-slides [options]="slideOpts" #slide>
         <ion-slide  *ngFor="let item of likes" [routerLink]="['/', 'music-details', item.name]" routerDirection="forward">
           
-            <img [src]="item.thumbnail" alt="" (click)="print()">
+            <img [src]="item.thumbnail" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
         
         </ion-slide>
       </ion-slides>
@@ -45,5 +44,5 @@
     
   </div>
 
-  <ion-button color="primary" expand="block" (click)="logout()">Logout</ion-button>
+  <ion-button shape="round" expand="block" type="submit" fill="outline" color="primary" (click)="logout()">Logout</ion-button>
 </ion-content>
