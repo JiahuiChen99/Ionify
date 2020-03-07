@@ -4,7 +4,7 @@ import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { File } from '@ionic-native/File/ngx';
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/ngx';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
@@ -30,24 +30,31 @@ export class RegisterPage implements OnInit {
 
   registerCredentials = {
     login: '',
-    username: '',
+    firstName: '',
     lastName: '' ,
     email: '',
-    password: ''
+    password: '',
+    imageUrl: 'https://res.cloudinary.com/yumenokko/image/upload/v1583577088/user_elytgp.jpg'
   };
 
   constructor(private service: SallefyAPIService, private camera: Camera, private file: File, private storage: Storage,
               private actionSheetController: ActionSheetController,
               private toastController: ToastController,
               public filepath: FilePath, private transfer: FileTransfer,
-              public loadingController: LoadingController) { }
+              public loadingController: LoadingController, private navCtrl:NavController) { }
 
   ngOnInit() {
    this.base64Image = '../assets/img/user.jpg';
   }
 
   register(){
-    this.service.register(this.base64Image);
+    this.service.register(this.registerCredentials).subscribe(
+      () => {
+        this.presentToast('Succesfully registered!');
+        this.navCtrl.pop();
+    }, (err) => { 
+      this.presentToast('Error creating user!')
+    });
   }
 
 
@@ -142,6 +149,8 @@ export class RegisterPage implements OnInit {
        this.presentToast('Uploaded!');
        this.dismissLoading();
        this.base64Image = JSON.parse(data.response).secure_url;
+
+       this.registerCredentials.imageUrl = this.base64Image;
        console.log(JSON.parse(data.response).secure_url);
       }, (err)  => {
         this.presentToast('Image not uploaded');

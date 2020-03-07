@@ -16,12 +16,12 @@
       <ion-input clearInput="true" name="login" [(ngModel)]="registerCredentials.login" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label><b>UserName:</b></ion-label>
-      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+      <ion-label><b>First Name:</b></ion-label>
+      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.firstName" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label><b>LastName:</b></ion-label>
+      <ion-label><b>Last Name:</b></ion-label>
       <ion-input clearInput="true" name="lastname" [(ngModel)]="registerCredentials.lastName" required></ion-input>
     </ion-item>
 
@@ -59,7 +59,7 @@
         Select Image
       </ion-button>-->
     
-    <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" (click)="uploadImage()">
+    <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" [disabled]="pathURL == undefined" (click)="uploadImage()">
       <ion-icon slot="start" name="camera"></ion-icon>
       Upload Photo</ion-button>
   </form>

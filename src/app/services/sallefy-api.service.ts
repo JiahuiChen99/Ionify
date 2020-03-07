@@ -13,7 +13,6 @@ import { CloudinaryApiService } from '../services/cloudinary-api.service';
 export class SallefyAPIService {
 
   url = 'http://sallefy-pre.eu-west-3.elasticbeanstalk.com/api/';
-  // tslint:disable-next-line: max-line-length
   apiKey: any;
   authenticationState = new BehaviorSubject(false);
   
@@ -71,8 +70,8 @@ export class SallefyAPIService {
     this.authenticationState.next(false);
   }
 
-  register(image: string){
-    this.cloudinary.uploadProfileImage(image);
+  register(registerCredentials: any) : Observable<any>{
+    return this.http.post(this.url + 'register', registerCredentials, this.httpOptions2);
   }
 
   isAuthenticated(){
