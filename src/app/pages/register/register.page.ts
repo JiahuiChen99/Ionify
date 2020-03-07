@@ -26,14 +26,14 @@ export class RegisterPage implements OnInit {
 
   loading: any;
 
+  confirmPassword: '';
+
   registerCredentials = {
     login: '',
     username: '',
     lastName: '' ,
     email: '',
-    password: '',
-    confirmPassword: '',
-    
+    password: ''
   };
 
   constructor(private service: SallefyAPIService, private camera: Camera, private file: File, private storage: Storage,
@@ -143,9 +143,9 @@ export class RegisterPage implements OnInit {
        this.dismissLoading();
        this.base64Image = JSON.parse(data.response).secure_url;
        console.log(JSON.parse(data.response).secure_url);
-      }, (err)  =>
+      }, (err)  => {
         this.presentToast('Image not uploaded');
-      );
+      });
   }
 
   async presentToast(text) {
@@ -167,4 +167,8 @@ export class RegisterPage implements OnInit {
   async dismissLoading() {
     await this.loading.dismiss();
   }
+
+  checkIsEnabled() {
+    return this.confirmPassword === this.registerCredentials.password;
+}
 }

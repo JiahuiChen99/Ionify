@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Sign Up</ion-title>
-    <ion-button slot="end" type="submit" fill="clear" (click)="register()" [disabled]="registerForm.invalid">Register</ion-button>
+    <ion-button slot="end" type="submit" fill="clear" (click)="register()" [disabled]="(registerForm.invalid) || (checkIsEnabled() == false)">Register</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -37,7 +37,7 @@
 
     <ion-item>
       <ion-label><b>Confirm Password:</b></ion-label>
-      <ion-input clearInput="true" name="confirmpassword" type="password" [(ngModel)]="registerCredentials.confirmPassword" required></ion-input>
+      <ion-input clearInput="true" name="confirmpassword" type="password" [(ngModel)]="confirmPassword" required></ion-input>
     </ion-item>
 
     <ion-item>
