@@ -1,0 +1,21 @@
+<ion-content>
+  <div class="logo">
+    <ion-icon color="light" name="musical-notes"></ion-icon>
+  </div>
+  <div class="center">
+    <ion-item>
+      <ion-label color="light">UserName</ion-label>
+      <ion-input color="light" placeholder="username" type="email" [(ngModel)]="username"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label color="light">Password</ion-label>
+      <ion-input color="light" placeholder="password" type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    
+    <br>
+    <ion-button color="light" shape="round" expand="block" fill="outline" (click)="login()">Log In</ion-button>
+    <br>
+    <ion-button color="primary" shape="round" expand="block" [routerLink]="['/', 'register']">Register</ion-button>
+  </div>
+</ion-content>

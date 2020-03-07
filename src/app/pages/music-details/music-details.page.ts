@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 
 import { SharingComponent } from '../../sharing/sharing.component';
 import { PopoverController } from '@ionic/angular';
+import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 
 @Component({
   selector: 'app-music-details',
@@ -16,7 +17,7 @@ export class MusicDetailsPage implements OnInit {
 
   information: any;
   trackInfo: any;
-  
+  trackLiked: boolean;
 
   title: any;
   artist: any;
@@ -39,28 +40,27 @@ export class MusicDetailsPage implements OnInit {
   
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
-     private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController) { }
+     private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
+     private downloader: Downloader, public toastController: ToastController) { }
 
   ngOnInit() {
     let songName = this.activatedRoute.snapshot.paramMap.get('id');
- 
     // Get the information from the API
     //.subscribe(result => ) means that the Observable is a success
     this.service.retrieveSpecificTrack(songName).subscribe(result => {
       this.information = result;
-      
+
       this.trackInfo = this.information.tracks[0];
-      console.log(this.trackInfo);
+      this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
+        console.log(Object.values(data));
+        this.trackLiked = data.liked;
+      });
+      //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.prepareAudioFile();
-      
+
     });
-
-
-    
-
-    
   }
 
   prepareAudioFile() {
@@ -211,5 +211,38 @@ export class MusicDetailsPage implements OnInit {
     return await popover.present();
   }
 
+  like(){
+    this.service.likeTrack(this.trackInfo.id).subscribe(data => {
+      //this.trackLiked = (Object.values(data) == "true");
+      this.trackLiked = data.liked;
+      console.log( this.trackLiked);
+    });
+  }
+
+  downloadTrack(){
+    var request: DownloadRequest = {
+      uri: this.play_The_track,
+      title: this.trackInfo.name,
+      description: '',
+      mimeType: '',
+      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+      visibleInDownloadsUi: true,
+      destinationInExternalFilesDir: {
+          dirType: 'Downloads',
+          subPath: this.trackInfo.name + '.mp3'
+      }
+    };
+
+    this.downloader.download(request)
+    .then((location: string) => this.presentToast('File downloaded at:'+location))
+    .catch((error: any) => this.presentToast(JSON.stringify(error)));
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 4000
+    });
+    toast.present();
+  }
 }
 
