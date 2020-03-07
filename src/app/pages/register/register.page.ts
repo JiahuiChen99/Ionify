@@ -7,10 +7,8 @@ import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/Camera/n
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx'
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Base64 } from '@ionic-native/base64/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +24,8 @@ export class RegisterPage implements OnInit {
   imageUriPath: any;
   displayImage: any;
 
+  loading: any;
+
   registerCredentials = {
     login: '',
     username: '',
@@ -36,11 +36,11 @@ export class RegisterPage implements OnInit {
     
   };
 
-  base64: Base64;
-
   constructor(private service: SallefyAPIService, private camera: Camera, private file: File, private storage: Storage,
-              private actionSheetController: ActionSheetController, private toastController: ToastController, public filepath: FilePath, private transfer: FileTransfer,
-              private webview: WebView, public sanitizer: DomSanitizer) { }
+              private actionSheetController: ActionSheetController,
+              private toastController: ToastController,
+              public filepath: FilePath, private transfer: FileTransfer,
+              public loadingController: LoadingController) { }
 
   ngOnInit() {
    this.base64Image = '../assets/img/user.jpg';
@@ -92,11 +92,7 @@ export class RegisterPage implements OnInit {
         
         this.pathURL = imageData;
         //const tempFilename = imageData.substr(imageData.lastIndexOf('/') + 1);
-        
-        this.base64.encodeFile(this.pathURL).then((base64File: string) => {
-          this.base64Image = base64File});
 
-        console.log('URL: ' + this.base64Image);
 
         }else{
           // Extract just the filename. Result example: cdv_photo_003.jpg
@@ -118,45 +114,39 @@ export class RegisterPage implements OnInit {
         // Result example: file:///var/mobile/Containers/Data/Application
         // /E4A79B4A-E5CB-4E0C-A7D9-0603ECD48690/Library/NoCloud/cdv_photo_003.jpg
         this.pathURL = newBaseFilesystemPath + tempFilename;
-        
-        this.base64.encodeFile(this.pathURL).then((base64File: string) => {
-          this.base64Image = base64File});
-
-        console.log('URL: ' + this.base64Image);
       }
-        
-        
     } , (error) => {
-        this.presentToast('Error selecting the image: ' + JSON.parse(error));
+        this.presentToast('No files were selected');
     }
     );
   }
 
   uploadImage(){ 
+
+    this.presentLoading();
      //create file transfer object
-     const fileTransfer: FileTransferObject = this.transfer.create();
+    const fileTransfer: FileTransferObject = this.transfer.create();
 
     var serverurl = 'https://api.cloudinary.com/v1_1/yumenokko/image/upload';
-    
+
     //random int
     var random = Math.floor(Math.random() * 100);
-    
+
     //option transfer
     let options: FileUploadOptions = {
       params : {'upload_preset': 'preset'}
     }
 
+    
     fileTransfer.upload(this.pathURL, serverurl, options).then((data) => {
-       this.presentToast('Uploaded!')
+       this.presentToast('Uploaded!');
+       this.dismissLoading();
        this.base64Image = JSON.parse(data.response).secure_url;
        console.log(JSON.parse(data.response).secure_url);
       }, (err)  =>
-      console.log('HELLO::' + JSON.stringify(err)
-      ));
-  
+        this.presentToast('Image not uploaded');
+      );
   }
-
-  
 
   async presentToast(text) {
     const toast = await this.toastController.create({
@@ -165,5 +155,16 @@ export class RegisterPage implements OnInit {
         duration: 3000
     });
     toast.present();
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Uploading...',
+    });
+    await this.loading.present();
+  }
+
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 }

@@ -4,6 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Sign Up</ion-title>
+    <ion-button slot="end" type="submit" fill="clear" (click)="register()" [disabled]="registerForm.invalid">Register</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +13,7 @@
   <form (ngSubmit)="register()" #registerForm="ngForm">
     <ion-item>
       <ion-label><b>Login:</b></ion-label>
-      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.login" required></ion-input>
+      <ion-input clearInput="true" name="login" [(ngModel)]="registerCredentials.login" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label><b>UserName:</b></ion-label>
@@ -21,7 +22,7 @@
 
     <ion-item>
       <ion-label><b>LastName:</b></ion-label>
-      <ion-input clearInput="true" name="username" [(ngModel)]="registerCredentials.lastName"></ion-input>
+      <ion-input clearInput="true" name="lastname" [(ngModel)]="registerCredentials.lastName" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -31,12 +32,12 @@
 
     <ion-item>
       <ion-label><b>Password:</b></ion-label>
-      <ion-input clearInput="true" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+      <ion-input clearInput="true" name="password"  type="password" [(ngModel)]="registerCredentials.password" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label><b>Confirm Password:</b></ion-label>
-      <ion-input clearInput="true" name="password" [(ngModel)]="registerCredentials.confirmPassword" required></ion-input>
+      <ion-input clearInput="true" name="confirmpassword" type="password" [(ngModel)]="registerCredentials.confirmPassword" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -48,18 +49,19 @@
 
     <ion-card>
       <ion-card-content>
-        <img [src]="base64Image"/>
+        <img [src]="base64Image" (click)="selectImage()"/>
       </ion-card-content>
     </ion-card>
 
 
-      <ion-button type="file" shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
+      <!--<ion-button type="file" shape="round" expand="block" fill="outline" color="danger" (click)="selectImage()">
         <ion-icon slot="start" name="camera"></ion-icon>
         Select Image
-      </ion-button>
+      </ion-button>-->
     
-    <ion-button shape="round"  expand="block" type="submit"  (click)="register()" [disabled]="registerForm.invalid">Register</ion-button>
-    <ion-button shape="round"  expand="block" type="submit"  (click)="uploadImage()">Upload Photo</ion-button>
+    <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" (click)="uploadImage()">
+      <ion-icon slot="start" name="camera"></ion-icon>
+      Upload Photo</ion-button>
   </form>
 
 </ion-content>
