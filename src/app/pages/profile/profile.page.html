@@ -44,6 +44,26 @@
 
       <ion-slides [options]="slideOpts" #slide>
         <ion-slide  *ngFor="let item of likes" [routerLink]="['/', 'music-details', item.name]" routerDirection="forward">
+
+          <div class="imageStyle">
+            <img [src]="item.thumbnail" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+          </div>
+        
+        </ion-slide>
+      </ion-slides>
+      
+    </ion-card>
+  </div>
+
+  <div class="playlists">
+    <ion-card>
+      <ion-item mode="ios" [routerLink]="['/', 'likes']" routerDirection="forward">
+        <h4>Playlists</h4>
+        <ion-button slot="end" fill="clear" color="">{{playlistsNum}}</ion-button>
+      </ion-item>
+
+      <ion-slides [options]="slideOpts" #slide>
+        <ion-slide  *ngFor="let item of playlists">
           
             <img [src]="item.thumbnail" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
         
@@ -53,6 +73,7 @@
     </ion-card>
     
   </div>
+
 
   <ion-button shape="round" expand="block" type="submit" fill="outline" color="primary" (click)="logout()">Logout</ion-button>
 </ion-content>

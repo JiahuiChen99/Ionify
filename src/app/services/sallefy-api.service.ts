@@ -99,6 +99,9 @@ export class SallefyAPIService {
     return this.http.get(this.url + 'me/tracks/liked', this.httpOptions);
   }
 
+  retrievePlaylists(): Observable<any>{
+    return this.http.get(this.url + 'me/playlists', this.httpOptions);
+  }
 
   getUser(){
     return this.http.get(this.url + 'account', this.httpOptions);

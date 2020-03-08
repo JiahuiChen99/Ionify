@@ -14,6 +14,8 @@ export class ProfilePage implements OnInit {
     likes: Observable<any>;
     //@ViewChild('slide') slideWithNav: IonSlides;
 
+    playlists: Observable<any>;
+
     slideOpts = {
       slidesPerView: 1,
       freeMode: true,
@@ -34,7 +36,8 @@ export class ProfilePage implements OnInit {
     following: number;
     likesArray: any[];
     likesNum: number;
-
+    playlistsArray: any[];
+    playlistsNum: number;
     constructor(public navCtrl: NavController, private service: SallefyAPIService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -49,6 +52,15 @@ export class ProfilePage implements OnInit {
         this.followers = this.userInfo.followers;
         this.following = this.userInfo.following;
       });
+    
+    this.service.retrievePlaylists().subscribe(
+      data => {
+        this.playlists = data;
+        this.playlistsArray = data as any[];
+        this.playlistsNum = this.playlistsArray.length;
+        console.log(this.playlists);
+      }
+    );
 
     this.service.retrieveLikedTracks().subscribe(
         data => {this.likes = data;
