@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SallefyAPIService } from './services/sallefy-api.service';
 import { Router } from '@angular/router';
+import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +18,17 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authenticationService: SallefyAPIService,
-    private router: Router
+    private router: Router,
+    private lottieSplashScreen: LottieSplashScreen
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      setTimeout(() => {
+        this.lottieSplashScreen.hide()
+      });
       this.statusBar.overlaysWebView(true);
       this.statusBar.styleBlackTranslucent();
 
