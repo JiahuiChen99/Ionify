@@ -74,6 +74,10 @@ export class SallefyAPIService {
     return this.http.post(this.url + 'register', registerCredentials, this.httpOptions2);
   }
 
+  uploadTrack(trackInformation: any): Observable<any>{
+    return this.http.post(this.url + 'tracks', trackInformation, this.httpOptions);
+  }
+
   isAuthenticated(){
     return this.authenticationState.value;
   }
@@ -103,7 +107,12 @@ export class SallefyAPIService {
     return this.http.get(this.url + 'me/playlists', this.httpOptions);
   }
 
+  retrieveSprecificPlaylist(playlistId: string): Observable<any>{
+    return this.http.get(this.url + 'playlists/' + playlistId, this.httpOptions);
+  }
+  
   getUser(){
     return this.http.get(this.url + 'account', this.httpOptions);
   }
+
 }

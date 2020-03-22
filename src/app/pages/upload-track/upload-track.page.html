@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Upload track</ion-title>
+    <ion-button slot="end" type="submit" fill="clear"  color="success" (click)="uploadTrack()" [disabled]="(uploadTrackForm.invalid) || (checkName() == false)">UPLOAD</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+  </section>
+
+  <form #uploadTrackForm="ngForm">
+    <ion-item color="transparent">
+      <ion-label position="floating">Track Name <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input name="trackName" required [(ngModel)]="trackInformation.name" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item color="transparent">
+      <ion-label position="fixed">Duration <ion-text color="danger"></ion-text></ion-label>
+      <ion-input name="tackDuration" [(ngModel)]="trackInformation.duration" type="number"></ion-input>
+    </ion-item> 
+
+    <ion-item color="transparent">
+      <ion-label>Choose a Genre</ion-label>
+      <ion-select name="trackGenre" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="win3.1">POP</ion-select-option>
+        <ion-select-option value="win95">ROCK</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item color="transparent">
+      <ion-label position="stacked">Description <ion-text color="danger"></ion-text></ion-label>
+      <ion-textarea name="trackDescription"></ion-textarea>
+    </ion-item> 
+    
+    <ion-item color="transparent">
+      <ion-label>Choose a theme Color</ion-label>
+      <ion-select name="trackColour" [(ngModel)]="trackInformation.color" okText="Okay" cancelText="Dismiss">
+        <ion-select-option  *ngFor= "let gradient of gradients" [value]="gradient.name">{{gradient.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" (click)="selectSong()">
+      <ion-icon slot="start" name="musical-note"></ion-icon>
+      Select Track</ion-button>
+
+    <ion-card>
+      <ion-card-content>
+        <img [src]="coverImage" (click)="selectImage()"/>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
