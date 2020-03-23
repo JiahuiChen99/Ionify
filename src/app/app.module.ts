@@ -27,10 +27,15 @@ import { FileUploadModule } from "ng2-file-upload";
 import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx'
+import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { MoreTrackComponent } from './component/more-track/more-track.component';
+import { MusicControls } from '@ionic-native/music-controls/ngx';
+
 
 @NgModule({
-  declarations: [AppComponent, SharingComponent],
-  entryComponents: [SharingComponent],
+  declarations: [AppComponent, SharingComponent, MoreTrackComponent],
+  entryComponents: [SharingComponent, MoreTrackComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot({_forceStatusbarPadding: true}),
@@ -44,6 +49,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
   providers: [
     StatusBar,
     SplashScreen,
+    LottieSplashScreen,
     Media,
     SharingComponent,
     SocialSharing,
@@ -54,6 +60,8 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
     WebView,
     FilePath,
     FileTransfer,
+    FileChooser,
+    MusicControls,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

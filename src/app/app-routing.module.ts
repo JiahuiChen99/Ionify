@@ -20,10 +20,23 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'playlists',
+    loadChildren: () => import('./pages/playlists/playlists.module').then( m => m.PlaylistsPageModule)
+  },
+  {
+    path: 'playlistview/:id',
+    loadChildren: () => import('./pages/playlistview/playlistview.module').then( m => m.PlaylistviewPageModule)
+  },  {
+    path: 'upload-track',
+    loadChildren: () => import('./pages/upload-track/upload-track.module').then( m => m.UploadTrackPageModule)
+  },
+
 
 
 ];

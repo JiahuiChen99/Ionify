@@ -12,6 +12,7 @@ export class LoginPage implements OnInit {
 
   username: string;
   password: string;
+  Ionifylogo: string;
 
   body = {
     "password": this.password,
@@ -29,6 +30,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.Ionifylogo = '../assets/img/ionifyLogo.png';
   }
 
   login(){

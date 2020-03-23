@@ -1,8 +1,13 @@
 .header{
     height: 180px;
-    background-color: #03A9F4;
+    //background-color: #03A9F4;
+    background-image: linear-gradient(#2980B9, #6DD5FA);
     width: 100%;
-    padding-top: 1px;
+    padding-top: 10px;
+}
+
+ion-content {
+    --background: linear-gradient(to top, #636FA4, #E8CBC0);
 }
 
 .header h2{
@@ -65,12 +70,20 @@
 }
 
 .tracks-liked{
-    margin-top: 40px;
+    margin-top: 50px;
 }
 .tracks-liked h4{
     //margin-top: 50px;
     font-weight: bold;
 }
+.playlists{
+    margin-top: 30px;
+}
+.playlists h4{
+    //margin-top: 50px;
+    font-weight: bold;
+}
+
 
 span{
     padding-left: 2px!important;
@@ -91,11 +104,14 @@ span{
     height: 55px;
   }
   
+  ion-button {
+      --color: grey;
+  }
   
   ion-slide {
     width: 90px!important;
     height: 85px!important;
-    background-color:  #FFF;
+    //background-color:  #FFF;
     float: left;
     margin-left: 1.5px!important;
     margin-right: 1.5px!important;
@@ -104,3 +120,22 @@ span{
   ion-slides{
     //background-color:  rgba(194, 193, 194, 0.52);
   }
+
+  ion-refresher ion-refresher-content {
+    --color:rgb(255, 15, 15) !important;
+    
+    .refresher-pullingText, .refresher-refreshingText, .refresher-refreshing-icon, .refresher-pulling-icon {
+      color: rgb(0, 238, 255) !important;
+    }
+  }
+
+  .imageStyle{
+    //display:  inline-block;
+    border-radius: 10px;
+    img{
+        object-fit: cover !important;
+        //max-width: 100%;
+        border-radius: 9px;
+        margin: 0 !important;
+    }
+}

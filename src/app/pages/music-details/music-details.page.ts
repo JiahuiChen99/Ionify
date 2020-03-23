@@ -7,6 +7,8 @@ import { Platform, ToastController } from '@ionic/angular';
 import { SharingComponent } from '../../sharing/sharing.component';
 import { PopoverController } from '@ionic/angular';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
+import { MoreTrackComponent } from 'src/app/component/more-track/more-track.component';
+import { MusicControls } from '@ionic-native/music-controls/ngx';
 
 @Component({
   selector: 'app-music-details',
@@ -18,6 +20,7 @@ export class MusicDetailsPage implements OnInit {
   information: any;
   trackInfo: any;
   trackLiked: boolean;
+  songName: any;
 
   title: any;
   artist: any;
@@ -41,13 +44,13 @@ export class MusicDetailsPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
      private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
-     private downloader: Downloader, public toastController: ToastController) { }
+     private downloader: Downloader, public toastController: ToastController, private musicControls: MusicControls) { }
 
   ngOnInit() {
-    let songName = this.activatedRoute.snapshot.paramMap.get('id');
+    this.songName = this.activatedRoute.snapshot.paramMap.get('id');
     // Get the information from the API
     //.subscribe(result => ) means that the Observable is a success
-    this.service.retrieveSpecificTrack(songName).subscribe(result => {
+    this.service.retrieveSpecificTrack(this.songName).subscribe(result => {
       this.information = result;
 
       this.trackInfo = this.information.tracks[0];
@@ -58,6 +61,8 @@ export class MusicDetailsPage implements OnInit {
       //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
+      this.artist = this.trackInfo.owner.login;
+      console.log(this.artist);
       this.prepareAudioFile();
 
     });
@@ -67,6 +72,32 @@ export class MusicDetailsPage implements OnInit {
     this.platform.ready().then((res) => {
       this.getDuration();
     });
+
+    this.musicControls.create({
+      track       : this.songName,        // optional, default : ''
+      artist      : this.artist,                       // optional, default : ''
+      cover       : this.image,      // optional, default : nothing
+      // cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
+      //           or a remote url ('http://...', 'https://...', 'ftp://...')
+      isPlaying   : true,                         // optional, default : true
+      dismissable : false,                         // optional, default : false
+    
+      // hide previous/next/close buttons:
+      hasPrev   : true,      // show previous button, optional, default: true
+      hasNext   : true,      // show next button, optional, default: true
+      hasClose  : false,       // show close button, optional, default: false
+
+      // Android only, optional
+      // text displayed in the status bar when the notification (and the ticker) are updated, optional
+      ticker    : 'Now playing' + this.songName,
+      // All icons default to their built-in android equivalents
+      playIcon: 'media_play',
+      pauseIcon: 'media_pause',
+      prevIcon: 'media_prev',
+      nextIcon: 'media_next',
+      closeIcon: 'media_close',
+      notificationIcon: 'notification'
+     });
   }
 
   getDuration() {
@@ -107,9 +138,11 @@ export class MusicDetailsPage implements OnInit {
           break;
         case 2:   // 2: playing
           this.is_playing = true;
+          this.musicControls.updateIsPlaying(true); // toggle the play/pause notification button
           break;
         case 3:   // 3: pause
           this.is_playing = false;
+          this.musicControls.updateIsPlaying(false); // toggle the play/pause notification button
           break;
         case 4:   // 4: stop
         default:
@@ -177,6 +210,7 @@ export class MusicDetailsPage implements OnInit {
 
   ngOnDestroy() {
     this.stop();
+    this.musicControls.destroy();
   }
 
   toHHMMSS(secs) {
@@ -240,9 +274,23 @@ export class MusicDetailsPage implements OnInit {
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 4000
+      duration: 4000,
+      mode: 'ios'
     });
     toast.present();
+  }
+
+  async presentPopover(ev: any) {
+    //console.log(this.songName);
+    const popover = await this.popoverController.create({
+      component: MoreTrackComponent,
+      componentProps: {songId: this.songName} ,
+      event: ev,
+      animated: true,
+      translucent: true,
+      mode: 'ios'
+    });
+    return await popover.present();
   }
 }
 

@@ -25,6 +25,14 @@ export class MusicListPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.trackList = this.service.retrieveTracks();
+    this.trackList.subscribe(
+      data => {this.tracks = data;
+        console.log(this.tracks);
+    });
+  }
+
   searchTrack(){
      this.trackList = this.service.retrieveSpecificTrack(this.trackName);
     

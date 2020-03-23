@@ -9,54 +9,61 @@ import { Storage } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { LoadingController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+
+export interface Gradient{
+  name: string;
+  colors: string[];
+}
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  selector: 'app-upload-track',
+  templateUrl: './upload-track.page.html',
+  styleUrls: ['./upload-track.page.scss'],
 })
-export class RegisterPage implements OnInit {
-
-  base64Image: string;
+export class UploadTrackPage implements OnInit {
+  coverImage: string;
+  songUrl: string;
   safeImg: any;
   photo: any;
   pathURL: any;
   imageUriPath: any;
   displayImage: any;
 
+  gradients: Gradient[];
+
   loading: any;
 
-  confirmPassword: '';
+  imagewithlabel: string;
 
-  registerCredentials = {
-    login: '',
-    firstName: '',
-    lastName: '' ,
-    email: '',
-    password: '',
-    imageUrl: 'https://res.cloudinary.com/yumenokko/image/upload/v1583577088/user_elytgp.jpg'
+  trackInformation = {
+    name: '',
+    color: '',
+    duration: '',
+    thumbnail: 'https://res.cloudinary.com/yumenokko/image/upload/v1584883942/songCover.jpg',
+    url: ''
   };
 
+
+
   constructor(private service: SallefyAPIService, private camera: Camera, private file: File, private storage: Storage,
-              private actionSheetController: ActionSheetController,
-              private toastController: ToastController,
-              public filepath: FilePath, private transfer: FileTransfer,
-              public loadingController: LoadingController, private navCtrl:NavController) { }
+    private actionSheetController: ActionSheetController, private toastController: ToastController,
+    public filepath: FilePath, private transfer: FileTransfer,
+    public loadingController: LoadingController, private navCtrl:NavController, public http: HttpClient, public filechooser: FileChooser) { }
 
   ngOnInit() {
-   this.base64Image = '../assets/img/user.jpg';
-  }
+    this.coverImage = '../assets/img/songCover.jpg';
 
-  register(){
-    this.service.register(this.registerCredentials).subscribe(
-      () => {
-        this.presentToast('Successfully registered!');
-        this.navCtrl.pop();
-    }, (err) => { 
-      this.presentToast('Error creating user!')
-    });
+    this.http.get('../assets/gradients.json').subscribe(
+      (data) => {
+        this.gradients = Object.values(data);
+        console.log(this.gradients);
+      }
+    );
+    //this.gradients = JSON.parse(this.file.applicationDirectory + '../assets/gradients.json');
+    //this.file.readAsText(this.file.applicationDirectory + 'www/assets', 'gradients.json');
   }
-
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
@@ -129,6 +136,7 @@ export class RegisterPage implements OnInit {
         // /E4A79B4A-E5CB-4E0C-A7D9-0603ECD48690/Library/NoCloud/cdv_photo_003.jpg
         this.pathURL = newBaseFilesystemPath + tempFilename;
       }
+      this.uploadImage();
     } , (error) => {
         this.presentToast('No files were selected');
     }
@@ -155,9 +163,9 @@ export class RegisterPage implements OnInit {
     fileTransfer.upload(this.pathURL, serverurl, options).then((data) => {
        this.presentToast('Uploaded!');
        this.dismissLoading();
-       this.base64Image = JSON.parse(data.response).secure_url;
+       this.coverImage = JSON.parse(data.response).secure_url;
 
-       this.registerCredentials.imageUrl = this.base64Image;
+       this.trackInformation.thumbnail = this.coverImage;
        console.log(JSON.parse(data.response).secure_url);
       }, (err)  => {
         this.presentToast('Image not uploaded');
@@ -168,8 +176,7 @@ export class RegisterPage implements OnInit {
     const toast = await this.toastController.create({
         message: text,
         position: 'bottom',
-        duration: 3000,
-        mode: 'ios'
+        duration: 3000
     });
     toast.present();
   }
@@ -185,7 +192,51 @@ export class RegisterPage implements OnInit {
     await this.loading.dismiss();
   }
 
-  checkIsEnabled() {
-    return this.confirmPassword === this.registerCredentials.password;
-}
+  selectSong(){
+    this.filechooser.open().then(uri => this.uploadSong(uri))
+  }
+
+  uploadSong(uri: string){ 
+
+    this.presentLoading();
+     //create file transfer object
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    var serverurl = 'https://api.cloudinary.com/v1_1/yumenokko/video/upload';
+
+    //random int
+    var random = Math.floor(Math.random() * 100);
+
+    //option transfer
+    let options: FileUploadOptions = {
+      params : {'upload_preset': 'preset'}
+    }
+
+    
+    fileTransfer.upload(uri, serverurl, options).then((data) => {
+       this.presentToast('Uploaded!');
+       this.dismissLoading();
+       this.songUrl = JSON.parse(data.response).secure_url;
+
+       this.trackInformation.url = this.songUrl;
+       console.log(JSON.parse(data.response).secure_url);
+      }, (err)  => {
+        this.presentToast('Song not uploaded');
+      });
+  }
+
+  checkName(){
+    return this.trackInformation.name != null;
+  }
+
+  uploadTrack(){
+    this.service.uploadTrack(this.trackInformation).subscribe(
+      () => {
+        this.presentToast('Successfully uploaded!');
+        this.navCtrl.pop();
+      }, (err) => {
+        this.presentToast('Error uploading song!');
+      }
+    );
+  }
 }

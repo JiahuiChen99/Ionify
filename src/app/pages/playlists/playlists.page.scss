@@ -2,21 +2,18 @@ ion-content {
     --background: linear-gradient(to top, #636FA4, #E8CBC0);
 }
 
+ion-toolbar {
+    --background: #E8CBC0;
+}
+
 
 ion-list {
     --ion-background-color: transparent !important;
     --ion-border-color: transparent !important;
     }
 
-ion-toolbar {
-    --background: #E8CBC0;
-}
 
-ion-fab-button{
-    --color: red;
-}
-
-
+    
 section .wave{
     position: fixed;
     bottom: 0;
