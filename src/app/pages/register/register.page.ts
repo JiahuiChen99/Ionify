@@ -50,7 +50,7 @@ export class RegisterPage implements OnInit {
   register(){
     this.service.register(this.registerCredentials).subscribe(
       () => {
-        this.presentToast('Succesfully registered!');
+        this.presentToast('Successfully registered!');
         this.navCtrl.pop();
     }, (err) => { 
       this.presentToast('Error creating user!')
@@ -168,7 +168,8 @@ export class RegisterPage implements OnInit {
     const toast = await this.toastController.create({
         message: text,
         position: 'bottom',
-        duration: 3000
+        duration: 3000,
+        mode: 'ios'
     });
     toast.present();
   }

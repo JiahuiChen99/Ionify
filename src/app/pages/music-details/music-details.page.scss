@@ -84,12 +84,12 @@
     height: 65px !important;
     // font-size: 2.3em !important;
     --border-radius: 50%;
-    --box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    
     --transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), background-color 15ms linear, color 15ms linear;
   }
   
   .darkColor {
-    color: black !important;
+    color: rgb(255, 255, 255) !important;
     font-size: 32px;
     margin-left: 3px;
   }
@@ -114,6 +114,8 @@
   
   .Iconsize_For_Rev {
     font-size: 23px;
+    //--ripple-color: transparent;
+    //--background-activated: rgb(0, 0, 0) !important;
   }
   
   .flexRow {

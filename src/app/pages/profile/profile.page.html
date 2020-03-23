@@ -28,7 +28,7 @@
       <div class="blue-ring">
         <div class="white-ring">
           <div class="profile-image">
-            <img [src]="profileImage" onError="this.src = 'https://vignette.wikia.nocookie.net/drama/images/1/16/WatanabeMayu2018.png/revision/latest/scale-to-width-down/340?cb=20190510030849&path-prefix=es'">
+            <img [src]="profileImage" onError="this.src = 'https://res.cloudinary.com/yumenokko/image/upload/v1583577088/user_elytgp.jpg'">
           </div>
         </div>
       </div>
@@ -43,10 +43,10 @@
       </ion-item>
 
       <ion-slides [options]="slideOpts" #slide>
-        <ion-slide  *ngFor="let item of likes" [routerLink]="['/', 'music-details', item.name]" routerDirection="forward">
+        <ion-slide  *ngFor="let item of likes" mode="ios" [routerLink]="['/', 'music-details', item.name]" routerDirection="forward">
 
           <div class="imageStyle">
-            <img [src]="item.thumbnail" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+            <img [src]="item.thumbnail" onError="this.src ='../assets/img/logo.png'">
           </div>
         
         </ion-slide>
@@ -57,15 +57,15 @@
 
   <div class="playlists">
     <ion-card>
-      <ion-item mode="ios" [routerLink]="['/', 'likes']" routerDirection="forward">
+      <ion-item mode="ios" [routerLink]="['/', 'playlists']" routerDirection="forward">
         <h4>Playlists</h4>
         <ion-button slot="end" fill="clear" color="">{{playlistsNum}}</ion-button>
       </ion-item>
 
       <ion-slides [options]="slideOpts" #slide>
-        <ion-slide  *ngFor="let item of playlists">
+        <ion-slide  *ngFor="let item of playlists" [routerLink]="['/', 'playlistview', item.id]" routerDirection="forward">
           
-            <img [src]="item.thumbnail" onError="this.src ='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'">
+            <img [src]="item.thumbnail" onError="this.src ='../assets/img/logo.png'">
         
         </ion-slide>
       </ion-slides>

@@ -79,6 +79,15 @@ export class ProfilePage implements OnInit {
       });
   }
 
+  ionViewWillEnter(){
+    this.service.retrieveLikedTracks().subscribe(
+      data => {this.likes = data;
+        this.likesArray = data as any[];
+        this.likesNum = this.likesArray.length;
+        console.log(this.likesNum)
+      });
+  }
+
 
   doRefresh(event) {
     

@@ -20,12 +20,12 @@
       <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'music-details', item.name]">
             
         <ion-avatar class="list" color="none" slot="start">
-          <img [src]="item.thumbnail" onError="this.src='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'" >
+          <img [src]="item.thumbnail" onError="this.src='../assets/img/logo.png'" >
         </ion-avatar>
         
         <ion-label color="none" class="list">
           <h2><b>{{ item.name }}</b></h2>
-          <h4>{{ item.duration }}</h4>
+          <h4>{{ item.owner.login }}</h4>
           
         </ion-label>
         
@@ -45,7 +45,7 @@
         </ion-item-sliding>
      
       </ion-list>
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed"  [routerLink]="['/', 'upload-track']">
         <ion-fab-button>
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>

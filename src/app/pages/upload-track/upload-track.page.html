@@ -45,15 +45,15 @@
         <ion-select-option  *ngFor= "let gradient of gradients" [value]="gradient.name">{{gradient.name}}</ion-select-option>
       </ion-select>
     </ion-item>
-
-    <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" (click)="selectSong()">
-      <ion-icon slot="start" name="musical-note"></ion-icon>
-      Select Track</ion-button>
-
-    <ion-card>
-      <ion-card-content>
-        <img [src]="coverImage" (click)="selectImage()"/>
-      </ion-card-content>
-    </ion-card>
-  </form>
+    <div  class="center">
+      <ion-button shape="round" expand="block" type="submit" fill="outline" color="danger" (click)="selectSong()">
+        <ion-icon slot="start" name="musical-note"></ion-icon>
+        Select Track</ion-button>
+    </div>
+      <ion-card>
+        <ion-card-content>
+          <img [src]="coverImage" (click)="selectImage()"/>
+        </ion-card-content>
+      </ion-card>
+    </form>
 </ion-content>
