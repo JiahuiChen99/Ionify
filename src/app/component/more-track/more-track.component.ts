@@ -88,8 +88,7 @@ export class MoreTrackComponent implements OnInit {
     toast.present();
   }
 
-  async chromecast(track : string){
-    console.log(track[0]);
+  /*async chromecast(track : string){
     var appId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
     var apiConfig = new chrome.cast.ApiConfig(new chrome.cast.SessionRequest(appId), function sessionListener (session) {
       // The session listener is only called under the following conditions:
@@ -106,7 +105,7 @@ export class MoreTrackComponent implements OnInit {
     
 
     // initialize chromecast, this must be done before using other chromecast features
-    console.log('2' + this.trackURL);
+    
     var mediaInfo = new chrome.cast.media.MediaInfo(this.trackURL, 'audio/mpeg');
     mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
     //mediaInfo.metadata.metadataType = ;
@@ -148,12 +147,10 @@ export class MoreTrackComponent implements OnInit {
               // You should see the video playing now!
               // Got media!
               _media = media;
-      
-              
-      
+
           }, function (err) {
               // Failed (check that the video works in your browser)
           });
         }
-  }
+  }*/
 }
