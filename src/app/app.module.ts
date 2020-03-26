@@ -20,7 +20,7 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/File/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';  
 
 import { FileUploadModule } from "ng2-file-upload";
 
@@ -31,7 +31,7 @@ import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { MoreTrackComponent } from './component/more-track/more-track.component';
 import { MusicControls } from '@ionic-native/music-controls/ngx';
-
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @NgModule({
   declarations: [AppComponent, SharingComponent, MoreTrackComponent],
@@ -62,6 +62,7 @@ import { MusicControls } from '@ionic-native/music-controls/ngx';
     FileTransfer,
     FileChooser,
     MusicControls,
+    BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

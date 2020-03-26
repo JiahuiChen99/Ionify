@@ -9,6 +9,9 @@ import { PopoverController } from '@ionic/angular';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { MoreTrackComponent } from 'src/app/component/more-track/more-track.component';
 import { MusicControls } from '@ionic-native/music-controls/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
+const step = 5;
 
 @Component({
   selector: 'app-music-details',
@@ -44,7 +47,8 @@ export class MusicDetailsPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
      private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
-     private downloader: Downloader, public toastController: ToastController, private musicControls: MusicControls) { }
+     private downloader: Downloader, public toastController: ToastController, private musicControls: MusicControls,
+     private backgroundMode: BackgroundMode) { }
 
   ngOnInit() {
     this.songName = this.activatedRoute.snapshot.paramMap.get('id');
@@ -55,24 +59,21 @@ export class MusicDetailsPage implements OnInit {
 
       this.trackInfo = this.information.tracks[0];
       this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
-        console.log(Object.values(data));
         this.trackLiked = data.liked;
       });
-      //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.artist = this.trackInfo.owner.login;
-      console.log(this.artist);
+  
       this.prepareAudioFile();
-
+      this.backgroundMode.enable();
+      this.backgroundMode.on('activate').subscribe(() =>{
+        this.backgroundMode.disableWebViewOptimizations(); 
+      })
     });
   }
 
-  prepareAudioFile() {
-    this.platform.ready().then((res) => {
-      this.getDuration();
-    });
-
+  setMediaControl(){
     this.musicControls.create({
       track       : this.songName,        // optional, default : ''
       artist      : this.artist,                       // optional, default : ''
@@ -98,6 +99,47 @@ export class MusicDetailsPage implements OnInit {
       closeIcon: 'media_close',
       notificationIcon: 'notification'
      });
+
+    this.musicControls.subscribe().subscribe((action) => {
+      console.log('action', action);
+          const message = JSON.parse(action).message;
+          console.log('message', message);
+          switch(message) {
+            case 'music-controls-next':
+               // Do something
+                this.position = this.position + step < this.duration ? this.position + step : this.duration;
+
+               break;
+            case 'music-controls-previous':
+               // Do something
+              this.position = this.position < step ? 0.001 : this.position - step;
+              break;
+            case 'music-controls-pause':
+               // Do something
+               console.log('music pause');
+               this.curr_playing_file.pause();
+               this.musicControls.updateIsPlaying(false);
+               break;
+            case 'music-controls-play':
+               // Do something
+               console.log('music play');
+               this.curr_playing_file.play();
+               this.musicControls.updateIsPlaying(true);
+               break;
+            case 'music-controls-stop-listening':
+                console.log('Destroyed in swith')
+                this.musicControls.destroy();
+              break;
+          }
+    });
+    this.musicControls.listen();  
+  }
+  
+
+  prepareAudioFile() {
+    this.platform.ready().then((res) => {
+      this.getDuration();
+    });  
   }
 
   getDuration() {
@@ -105,6 +147,7 @@ export class MusicDetailsPage implements OnInit {
     // on occassions, the plugin only gives duration of the file if the file is played
     // at least once
     this.curr_playing_file.play();
+    //this.setMediaControl();
 
     this.curr_playing_file.setVolume(0.0);  // you don't want users to notice that you are playing the file
     const self = this;
@@ -124,6 +167,7 @@ export class MusicDetailsPage implements OnInit {
 
           clearInterval(self.get_duration_interval);
           this.display_duration = this.toHHMMSS(self.duration);
+          this.is_ready = true;
           self.setToPlayback();
         }
       }
@@ -147,6 +191,7 @@ export class MusicDetailsPage implements OnInit {
         case 4:   // 4: stop
         default:
           this.is_playing = false;
+          this.musicControls.updateIsPlaying(false); // toggle the play/pause notification button
           break;
       }
     });
@@ -179,11 +224,13 @@ export class MusicDetailsPage implements OnInit {
   }
 
   play() {
+    this.setMediaControl();
     this.curr_playing_file.play();
   }
 
   pause() {
     this.curr_playing_file.pause();
+    this.musicControls.updateIsPlaying(false);
   }
 
   stop() {
@@ -209,9 +256,27 @@ export class MusicDetailsPage implements OnInit {
   }
 
   ngOnDestroy() {
-    this.stop();
-    this.musicControls.destroy();
+    console.log('PARO CANSO');
+    this.curr_playing_file.stop();
+    console.log('FREE CANSO');
+    this.curr_playing_file.release();
+    //this.musicControls.listen();
+    console.log('DESTROY MUSICCONTROLS');
+    
+    this.musicControls.destroy().then(onSuccess => (console.log('Destroyed correctly'), onError => (console.log('Error destroying'))));
+    console.log('NO BACKGROUND');
+    //this.backgroundMode.disable();
+    clearInterval(this.get_position_interval);
+    this.position = 0;
   }
+
+  /*ionViewDidLeave(){
+    this.stop();
+    this.musicControls.listen();
+    this.musicControls.destroy();
+    this.backgroundMode.disable();
+  }*/
+  
 
   toHHMMSS(secs) {
     var sec_num = parseInt(secs, 10)
@@ -224,21 +289,16 @@ export class MusicDetailsPage implements OnInit {
       .join(":")
   }
 
-  openWebsite() {
-    window.open(this.information.Website, '_blank');
-  }
-
-
   async sharing() {
+    this.blur = true;
     const popover = await this.popoverController.create({
         component: SharingComponent,
         animated: true,
         showBackdrop: true,
     });
 
-    this.blur = true;
 
-    popover.onDidDismiss().then(data => {
+    popover.onWillDismiss().then(data => {
       this.blur = false;
     })
 
