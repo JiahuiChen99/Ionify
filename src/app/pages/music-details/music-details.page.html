@@ -4,6 +4,11 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
+      <ion-button mode="ios" (click)="chromecast()">
+        <ion-icon src="../assets/img/disabled-chromecast.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
       <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="more"></ion-icon>
       </ion-button>
