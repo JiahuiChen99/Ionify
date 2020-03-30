@@ -21,7 +21,7 @@ export class MusicListPage implements OnInit {
     this.trackList = this.service.retrieveTracks();
     this.trackList.subscribe(
       data => {this.tracks = data;
-        console.log(this.tracks);
+        //console.log(this.tracks);
     });
   }
 
@@ -29,7 +29,7 @@ export class MusicListPage implements OnInit {
     this.trackList = this.service.retrieveTracks();
     this.trackList.subscribe(
       data => {this.tracks = data;
-        console.log(this.tracks);
+        //console.log(this.tracks);
     });
   }
 
@@ -37,8 +37,9 @@ export class MusicListPage implements OnInit {
      this.trackList = this.service.retrieveSpecificTrack(this.trackName);
     
      this.trackList.subscribe(
-       data =>{this.tracks = data.tracks;
-              console.log(this.tracks)})
+        data =>{this.tracks = data.tracks;
+        //console.log(this.tracks)
+      })
   }
 
 }
