@@ -15,27 +15,29 @@
   <ion-searchbar [(ngModel)]="trackName" mode="ios" (ionChange)="searchTrack()"></ion-searchbar>
   
   <ion-list class="list" color="transparent" lines="none">  
-    <ion-item-sliding *ngFor="let item of tracks">
-      <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'music-details', item.name]">
-            
-        <ion-avatar class="list" color="none" slot="start">
-          <img [src]="item.thumbnail" onError="this.src='../assets/img/logo.png'" >
-        </ion-avatar>
-        
-        <ion-label color="none" class="list">
-          <h2><b>{{ item.name }}</b></h2>
-          <h4>{{ item.owner.login }}</h4>
-        </ion-label>
-        
-        <!--<ion-icon slot="end" name="musical-notes"></ion-icon>-->
-      </ion-item>
-
-      <ion-item-options side="start">        
-        <ion-item-option color="transparent">
-          <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+    <ion-virtual-scroll [items]="tracks" approxItemHeigh>
+      <ion-item-sliding *virtualItem="let item">
+        <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'music-details', item.name]">
+              
+          <ion-avatar class="list" color="none" slot="start">
+            <img [src]="item.thumbnail" onError="this.src='../assets/img/logo.png'" >
+          </ion-avatar>
+          
+          <ion-label color="none" class="list">
+            <h2><b>{{ item.name }}</b></h2>
+            <h4>{{ item.owner.login }}</h4>
+          </ion-label>
+          
+          <!--<ion-icon slot="end" name="musical-notes"></ion-icon>-->
+        </ion-item>
+  
+        <ion-item-options side="start">        
+          <ion-item-option color="transparent">
+            <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-virtual-scroll>
 
   </ion-list>
 
