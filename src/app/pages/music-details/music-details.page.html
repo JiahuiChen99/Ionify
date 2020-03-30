@@ -14,20 +14,33 @@
       </ion-button>
     </ion-buttons>
 
-    <div *ngIf="trackInfo != undefined">
+    <div *ngIf="trackInfo == undefined; else loadName">
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </div>
+    <ng-template #loadName>
+      <div>
         <ion-title class="ion-text-center">{{ trackInfo.name }}</ion-title>
     </div>
+    </ng-template>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div [ngClass]="{ 'popover_class' : blur }">
-  <div class="fixedContent">
+  
+  <div *ngIf="image == undefined; else loadImage" class="fixedContent">
     <ion-thumbnail>
-      <img [src]="image" onError="this.src ='../assets/img/logo.png'">
+      <ion-skeleton-text animated></ion-skeleton-text>
     </ion-thumbnail>
   </div>
+  <ng-template #loadImage>
+    <div class="fixedContent">
+      <ion-thumbnail>
+        <img [src]="image" onError="this.src ='../assets/img/logo.png'">
+      </ion-thumbnail>
+    </div>
+  </ng-template>
 
   <div class="padding_Top">
     <div class="fixedContent">
@@ -35,7 +48,6 @@
         <h3>
           {{ trackInfo.name }}
         </h3>
-        
       </div>
       <p class="ion-text-uppercase" color="light" class="pUser microsoft marquee ">{{artist}}</p>
     </div>
