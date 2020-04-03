@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { SallefyAPIService } from 'src/app/services/sallefy-api.service';
 import { Observable } from 'rxjs';
+import { ModalController } from '@ionic/angular';
+import { ListOptionsComponent } from 'src/app/component/list-options/list-options.component';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 @Component({
   selector: 'app-music-list',
@@ -15,7 +18,7 @@ export class MusicListPage implements OnInit {
   //The name of the track to be queried
   trackName: string = '';
 
-  constructor(private service: SallefyAPIService) { }
+  constructor(private service: SallefyAPIService, private modalCtrl: ModalController, private vibration: Vibration) { }
 
   ngOnInit() {
     this.trackList = this.service.retrieveTracks();
@@ -42,4 +45,17 @@ export class MusicListPage implements OnInit {
       })
   }
 
+  async openModal(event: any, songName: string, slidingItem: any){
+    if(event.detail.ratio == -1){
+      this.vibration.vibrate(200);
+      let modal = await this.modalCtrl.create({
+        component: ListOptionsComponent,
+        componentProps: {songId: songName},
+        showBackdrop: true,
+        cssClass: 'moreOptions-modal'
+      })
+      slidingItem.close();
+      modal.present();
+    }  
+  }
 }

@@ -15,8 +15,8 @@
   <ion-searchbar [(ngModel)]="trackName" mode="ios" (ionChange)="searchTrack()"></ion-searchbar>
   
   <ion-list class="list" color="transparent" lines="none">  
-    <ion-virtual-scroll [items]="tracks" approxItemHeigh>
-      <ion-item-sliding *virtualItem="let item">
+    <ion-virtual-scroll [items]="tracks">
+      <ion-item-sliding (ionDrag)="openModal($event, item.name, slidingItem)" *virtualItem="let item" #slidingItem>
         <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'music-details', item.name]">
               
           <ion-avatar class="list" color="none" slot="start">
@@ -33,7 +33,7 @@
   
         <ion-item-options side="start">        
           <ion-item-option color="transparent">
-            <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+            <ion-icon color="dark" slot="icon-only" name="logo-buffer"></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
@@ -59,7 +59,7 @@
 
       <ion-item-options side="start">        
         <ion-item-option color="transparent">
-          <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+          <ion-icon color="dark" slot="icon-only" name="logo-buffer"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
