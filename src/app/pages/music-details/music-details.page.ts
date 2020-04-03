@@ -10,6 +10,8 @@ import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-nati
 import { MoreTrackComponent } from 'src/app/component/more-track/more-track.component';
 import { MusicControls } from '@ionic-native/music-controls/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import WaveSurfer from 'wavesurfer.js';
+import Drawer from 'wavesurfer.js/src/drawer.js';
 
 const step = 5;
 declare var chrome;
@@ -46,6 +48,7 @@ export class MusicDetailsPage implements OnInit {
   display_duration: any = '00:00';
 
   blur = false;
+  ws: any;
   
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
@@ -69,6 +72,20 @@ export class MusicDetailsPage implements OnInit {
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.artist = this.trackInfo.owner.login;
+
+      this.ws = WaveSurfer.create({
+        container: '#waveform',
+        //scrollParent: true,
+        barRadius: 6,
+        waveColor: '#D9DCFF',
+        cursorColor: 'transparent',
+        progressColor: '#00ffdd',
+        backend: 'MediaElement',
+        barWidth : 3,
+        barGap: 3,
+				height 	 : 50
+      });
+      this.ws.load(this.play_The_track);
   
       this.prepareAudioFile();
       this.backgroundMode.enable();

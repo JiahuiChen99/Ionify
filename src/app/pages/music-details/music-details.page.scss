@@ -102,9 +102,10 @@
   .rangePlaytime {
     display: flex;
     justify-content: space-between;
+    font-size: 12px;
   
     .startTime {
-      padding-left: 9px;
+      padding-left: 15px;
     }
   
     .endTime {
@@ -130,8 +131,21 @@
   }
   
   .padding_Top {
-    padding-top: 24px;
+    padding-top: 20px;
   }
+
+  .waveform {
+    //display: flex;
+    align-items: center;
+
+    //height: 5%;
+    width: 100%;
+    padding-top: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    position: absolute;
+    z-index: 100;
+}
 
 
   .popover_class {
@@ -140,4 +154,19 @@
     -o-filter: blur(10px);
     -ms-filter: blur(10px);
     filter: blur(10px);
+
+  .waveform-container {
+      max-width: 100%;
+      width: 800px;
+  }
+
+  .waveform-bg {
+      clip-path: url("#waveform-mask");
+      fill: rgb(255, 2, 2);
+  }
+
+  .waveform-progress {
+      clip-path: url("#waveform-mask");
+      fill: #44bc75;
+  }
 }
