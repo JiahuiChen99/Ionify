@@ -29,13 +29,15 @@ import { Cloudinary } from 'cloudinary-core';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx'
 import { LottieSplashScreen } from '@ionic-native/lottie-splash-screen/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { MoreTrackComponent } from './component/more-track/more-track.component';
 import { MusicControls } from '@ionic-native/music-controls/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { Vibration } from '@ionic-native/vibration/ngx';
+import { MoreTrackComponent } from './component/more-track/more-track.component';
+import { ListOptionsComponent } from './component/list-options/list-options.component';
 
 @NgModule({
-  declarations: [AppComponent, SharingComponent, MoreTrackComponent],
-  entryComponents: [SharingComponent, MoreTrackComponent],
+  declarations: [AppComponent, SharingComponent, MoreTrackComponent, ListOptionsComponent],
+  entryComponents: [SharingComponent, MoreTrackComponent, ListOptionsComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot({_forceStatusbarPadding: true}),
@@ -63,6 +65,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
     FileChooser,
     MusicControls,
     BackgroundMode,
+    Vibration,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

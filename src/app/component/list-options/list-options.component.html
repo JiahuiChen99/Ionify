@@ -1,0 +1,44 @@
+<div *ngIf="image == undefined; else loadImage" class="thumbnail">
+  <ion-thumbnail>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ion-thumbnail>
+</div>
+<ng-template #loadImage>
+  <div class="thumbnail">
+    <ion-thumbnail (click)="dismiss()" [routerLink]="['/', 'music-details', trackInfo.name]">
+      <img [src]="image" onError="this.src ='../assets/img/logo.png'">
+    </ion-thumbnail>
+  </div>
+</ng-template>
+<div class="list">
+    <ion-list class="list" color="transparent" lines="none">
+      <ion-item button>
+        <ion-icon slot="start" name="trash"></ion-icon>
+        Delete
+      </ion-item>
+      <ion-item button>
+        <ion-icon slot="start" name="create"></ion-icon>
+        Edit
+      </ion-item>
+      <ion-item button (click)="like()" >
+        <ion-icon  [color]="trackLiked ? 'danger' : 'dark'" slot="start" [name]=" trackLiked ? 'heart' : 'heart-empty'"></ion-icon>
+        Like
+      </ion-item>
+      <ion-item button mode="ios" (click)="share()">
+        <ion-icon slot="start" name="share"></ion-icon>
+        Share
+      </ion-item>
+      <ion-item button>
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add to Playlist
+      </ion-item>
+      <ion-item button (click)="download()">
+        <ion-icon slot="start" name="cloud-download"></ion-icon>
+        Donwload
+      </ion-item>
+      <ion-item button (click)="chromecast()">
+        <ion-icon slot="start" src="../assets/img/disabled-chromecast.svg"></ion-icon>
+        Chromecast
+      </ion-item>
+    </ion-list>  
+</div>
