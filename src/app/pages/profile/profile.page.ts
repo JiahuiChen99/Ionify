@@ -48,7 +48,7 @@ export class ProfilePage implements OnInit {
         this.userInfo = data;
         this.username = this.userInfo.login;
         this.profileImage = this.userInfo.imageUrl;
-        console.log(this.profileImage);
+        //console.log(this.profileImage);
         this.followers = this.userInfo.followers;
         this.following = this.userInfo.following;
       });
@@ -58,7 +58,7 @@ export class ProfilePage implements OnInit {
         this.playlists = data;
         this.playlistsArray = data as any[];
         this.playlistsNum = this.playlistsArray.length;
-        console.log(this.playlists);
+        //console.log(this.playlists);
       }
     );
 
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
         data => {this.likes = data;
           this.likesArray = data as any[];
           this.likesNum = this.likesArray.length;
-          console.log(this.likesNum)
+          //console.log(this.likesNum);
         });
   }
 
@@ -75,7 +75,7 @@ export class ProfilePage implements OnInit {
       data => {this.likes = data;
         this.likesArray = data as any[];
         this.likesNum = this.likesArray.length;
-        console.log(this.likesNum)
+        //console.log(this.likesNum);
       });
   }
 
@@ -84,7 +84,7 @@ export class ProfilePage implements OnInit {
       data => {this.likes = data;
         this.likesArray = data as any[];
         this.likesNum = this.likesArray.length;
-        console.log(this.likesNum)
+        //console.log(this.likesNum);
       });
   }
 
@@ -95,7 +95,7 @@ export class ProfilePage implements OnInit {
       data => {this.likes = data;
         this.likesArray = data as any[];
         this.likesNum = this.likesArray.length;
-        console.log(this.likesNum)
+        //console.log(this.likesNum);
       });
 
     setTimeout(() => {

@@ -36,18 +36,18 @@ export class SallefyAPIService {
 
   login(body: any){
 
-    console.log(body);
+    //console.log(body);
     this.http.post(this.url + 'authenticate', JSON.stringify(body), this.httpOptions2).subscribe(
       async data => {
-        console.log(Object.values(data))
+        //console.log(Object.values(data))
         this.apiKey = Object.values(data);
-        console.log('API KEY: ' + this.apiKey)
+        //console.log('API KEY: ' + this.apiKey)
         
         this.httpOptions.headers = new HttpHeaders({
           Authorization: 'Bearer ' + this.apiKey
         })
         
-        console.log('HEADER: ' + this.httpOptions.headers)
+        //console.log('HEADER: ' + this.httpOptions.headers)
         if(data){
           this.authenticationState.next(true);
         }

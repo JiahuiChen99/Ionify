@@ -9,6 +9,14 @@ import { PopoverController } from '@ionic/angular';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { MoreTrackComponent } from 'src/app/component/more-track/more-track.component';
 import { MusicControls } from '@ionic-native/music-controls/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import WaveSurfer from 'wavesurfer.js';
+import Drawer from 'wavesurfer.js/src/drawer.js';
+
+const step = 5;
+declare var chrome;
+var _session;
+var _media = undefined;
 
 @Component({
   selector: 'app-music-details',
@@ -40,14 +48,18 @@ export class MusicDetailsPage implements OnInit {
   display_duration: any = '00:00';
 
   blur = false;
+  ws: any;
   
 
   constructor(private activatedRoute: ActivatedRoute, private service: SallefyAPIService,
      private media: Media, private platform: Platform, private share: SharingComponent, private popoverController: PopoverController,
-     private downloader: Downloader, public toastController: ToastController, private musicControls: MusicControls) { }
+     private downloader: Downloader, public toastController: ToastController, private musicControls: MusicControls,
+     private backgroundMode: BackgroundMode) { }
 
   ngOnInit() {
     this.songName = this.activatedRoute.snapshot.paramMap.get('id');
+
+    console.log(_media);
     // Get the information from the API
     //.subscribe(result => ) means that the Observable is a success
     this.service.retrieveSpecificTrack(this.songName).subscribe(result => {
@@ -55,24 +67,35 @@ export class MusicDetailsPage implements OnInit {
 
       this.trackInfo = this.information.tracks[0];
       this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
-        console.log(Object.values(data));
         this.trackLiked = data.liked;
       });
-      //console.log(this.trackInfo);
       this.play_The_track = this.information.tracks[0].url;
       this.image = this.trackInfo.thumbnail;
       this.artist = this.trackInfo.owner.login;
-      console.log(this.artist);
-      this.prepareAudioFile();
 
+      this.ws = WaveSurfer.create({
+        container: '#waveform',
+        //scrollParent: true,
+        barRadius: 6,
+        waveColor: '#D9DCFF',
+        cursorColor: 'transparent',
+        progressColor: '#00ffdd',
+        backend: 'MediaElement',
+        barWidth : 3,
+        barGap: 3,
+				height 	 : 50
+      });
+      this.ws.load(this.play_The_track);
+  
+      this.prepareAudioFile();
+      this.backgroundMode.enable();
+      this.backgroundMode.on('activate').subscribe(() =>{
+        this.backgroundMode.disableWebViewOptimizations(); 
+      })
     });
   }
 
-  prepareAudioFile() {
-    this.platform.ready().then((res) => {
-      this.getDuration();
-    });
-
+  setMediaControl(){
     this.musicControls.create({
       track       : this.songName,        // optional, default : ''
       artist      : this.artist,                       // optional, default : ''
@@ -98,6 +121,75 @@ export class MusicDetailsPage implements OnInit {
       closeIcon: 'media_close',
       notificationIcon: 'notification'
      });
+
+    this.musicControls.subscribe().subscribe((action) => {
+      console.log('action', action);
+          const message = JSON.parse(action).message;
+          console.log('message', message);
+          switch(message) {
+            case 'music-controls-next':
+               // Do something
+                this.position = this.position + step < this.duration ? this.position + step : this.duration;
+                if(_media != undefined){
+                  this.seekMedia(this.position);
+                }
+               break;
+            case 'music-controls-previous':
+               // Do something
+              this.position = this.position < step ? 0.001 : this.position - step;
+              if(_media != undefined){
+                this.seekMedia(this.position);
+              }
+              break;
+            case 'music-controls-pause':
+               // Do something
+               this.pause();
+               //this.curr_playing_file.pause();
+               //this.musicControls.updateIsPlaying(false);
+               break;
+            case 'music-controls-play':
+               // Do something
+               console.log('music play');
+               this.play();
+               //this.curr_playing_file.play();
+               //this.musicControls.updateIsPlaying(true);
+               break;
+            case 'music-controls-stop-listening':
+                console.log('Destroyed in swith')
+                this.musicControls.destroy();
+              break;
+            case 'music-controls-media-button-play':
+              this.play(); 
+              //this.curr_playing_file.play();
+                //this.musicControls.updateIsPlaying(true);
+              break;
+            case 'music-controls-media-button-pause':
+              this.pause();    
+              /*this.curr_playing_file.pause();
+                this.musicControls.updateIsPlaying(false);*/
+              break;
+            case 'music-controls-media-button-next':
+              this.position = this.position + step < this.duration ? this.position + step : this.duration;
+              if(_media != undefined){
+                this.seekMedia(this.position);
+              }
+              break;
+            case 'music-controls-media-button-previous':
+              this.position = this.position < step ? 0.001 : this.position - step;
+              if(_media != undefined){
+                this.seekMedia(this.position);
+              }
+              break;
+          }
+    });
+    this.musicControls.listen();  
+  }
+  
+
+  prepareAudioFile() {
+    this.platform.ready().then((res) => {
+      this.getDuration();
+    });  
   }
 
   getDuration() {
@@ -105,6 +197,7 @@ export class MusicDetailsPage implements OnInit {
     // on occassions, the plugin only gives duration of the file if the file is played
     // at least once
     this.curr_playing_file.play();
+    //this.setMediaControl();
 
     this.curr_playing_file.setVolume(0.0);  // you don't want users to notice that you are playing the file
     const self = this;
@@ -124,6 +217,7 @@ export class MusicDetailsPage implements OnInit {
 
           clearInterval(self.get_duration_interval);
           this.display_duration = this.toHHMMSS(self.duration);
+          this.is_ready = true;
           self.setToPlayback();
         }
       }
@@ -147,6 +241,7 @@ export class MusicDetailsPage implements OnInit {
         case 4:   // 4: stop
         default:
           this.is_playing = false;
+          this.musicControls.updateIsPlaying(false); // toggle the play/pause notification button
           break;
       }
     });
@@ -179,11 +274,29 @@ export class MusicDetailsPage implements OnInit {
   }
 
   play() {
-    this.curr_playing_file.play();
+    this.setMediaControl();
+    if(_media != undefined){
+      console.log('Play Chromecast');
+      this.musicControls.updateIsPlaying(true); // toggle the play/pause notification button)
+      this.is_playing = true;
+      this.playMedia();
+    }else{
+      console.log('Play Ionify')
+      this.curr_playing_file.play();
+    }
   }
 
   pause() {
-    this.curr_playing_file.pause();
+    if(_media != undefined){
+      console.log('Pause Chromecast');
+      this.musicControls.updateIsPlaying(false); // toggle the play/pause notification button
+      this.is_playing = false;
+      this.pauseMedia();
+    }else{
+      console.log('Pause Ionify')
+      this.curr_playing_file.pause();
+      this.musicControls.updateIsPlaying(false);
+    }
   }
 
   stop() {
@@ -209,8 +322,11 @@ export class MusicDetailsPage implements OnInit {
   }
 
   ngOnDestroy() {
-    this.stop();
-    this.musicControls.destroy();
+    this.curr_playing_file.stop();
+    this.curr_playing_file.release();
+    this.musicControls.destroy().then(onSuccess => (console.log('Destroyed correctly'), onError => (console.log('Error destroying'))));
+    clearInterval(this.get_position_interval);
+    this.position = 0;
   }
 
   toHHMMSS(secs) {
@@ -224,21 +340,16 @@ export class MusicDetailsPage implements OnInit {
       .join(":")
   }
 
-  openWebsite() {
-    window.open(this.information.Website, '_blank');
-  }
-
-
   async sharing() {
+    this.blur = true;
     const popover = await this.popoverController.create({
         component: SharingComponent,
         animated: true,
         showBackdrop: true,
     });
 
-    this.blur = true;
 
-    popover.onDidDismiss().then(data => {
+    popover.onWillDismiss().then(data => {
       this.blur = false;
     })
 
@@ -291,6 +402,99 @@ export class MusicDetailsPage implements OnInit {
       mode: 'ios'
     });
     return await popover.present();
+  }
+
+
+
+  async chromecast(){
+    var appId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
+    var apiConfig = new chrome.cast.ApiConfig(new chrome.cast.SessionRequest(appId), function sessionListener (session) {
+      // The session listener is only called under the following conditions:
+      // * will be called shortly chrome.cast.initialize is run
+      // * if the device is already connected to a cast session
+      // Basically, this is what allows you to re-use the same cast session 
+      // across different pages and after app restarts
+    }, function receiverListener (receiverAvailable) {
+      // receiverAvailable is a boolean.
+      // True = at least one chromecast device is available
+      // False = No chromecast devices available
+      // You can use this to determine if you want to show your chromecast icon
+    });
+    
+
+    // initialize chromecast, this must be done before using other chromecast features
+    
+    var mediaInfo = new chrome.cast.media.MediaInfo(this.play_The_track, 'audio/mpeg');
+    mediaInfo.metadata = new chrome.cast.media.MusicTrackMediaMetadata();
+    //mediaInfo.metadata.metadataType = ;
+    //mediaInfo.contentType = 'audio/mpeg';
+    mediaInfo.metadata.songName = 'Ionify';
+    mediaInfo.metadata.title = this.trackInfo.name;
+    mediaInfo.metadata.artist = this.trackInfo.owner.login;
+    mediaInfo.metadata.releaseDate = '2014-02-10';
+    mediaInfo.metadata.trackNumber = '1';
+    mediaInfo.metadata.images = [{'url': this.trackInfo.thumbnail}]
+    chrome.cast.initialize(apiConfig, function () {
+        // Initialize complete
+        // Let's start casting
+        requestSession();
+    }, function (err) {
+        // Initialize failure
+    });
+
+        function requestSession () {
+          // This will open a native dialog that will let 
+          // the user choose a chromecast to connect to
+          // (Or will let you disconnect if you are already connected)
+      
+          
+          chrome.cast.requestSession(function (session) {
+              // Got a session!
+              _session = session;
+      
+              // Load a video            
+              loadMedia();
+          }, function (err) {
+              // Failed, or if err is cancel, the dialog closed
+          });
+        }
+
+
+        function loadMedia () {
+          _session.loadMedia(new chrome.cast.media.LoadRequest(mediaInfo), function (media) {
+              // You should see the video playing now!
+              // Got media!
+              _media = media;
+
+          }, function (err) {
+              // Failed (check that the video works in your browser)
+          });
+        }
+  }
+
+  
+  pauseMedia () {
+    _media.pause({}, function () {
+        // Success
+    }, function (err) {
+        // Fail
+    });          
+  }
+
+  playMedia () {
+    _media.play({}, function () {
+        // Success
+    }, function (err) {
+        // Fail
+    });          
+  }
+
+  seekMedia (position: any) {
+    _media.seek(new chrome.cast.media.SeekRequest(position), function () {
+        // Success
+    }, function (err) {
+        // Fail
+    });          
   }
 }
 

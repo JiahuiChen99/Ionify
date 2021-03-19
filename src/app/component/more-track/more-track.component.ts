@@ -4,6 +4,9 @@ import { DownloadRequest, Downloader, NotificationVisibility } from '@ionic-nati
 import { ToastController, PopoverController } from '@ionic/angular';
 import { SharingComponent } from 'src/app/sharing/sharing.component';
 
+declare var chrome;
+var _session;
+var _media;
 @Component({
   selector: 'app-more-track',
   templateUrl: './more-track.component.html',
@@ -13,6 +16,7 @@ export class MoreTrackComponent implements OnInit {
   trackInfo: any;
   information: any;
   trackLiked: boolean;
+  trackURL: string;
 
 
   @Input("songId") songId;
@@ -20,16 +24,19 @@ export class MoreTrackComponent implements OnInit {
               private popoverController: PopoverController) { }
 
   ngOnInit() {
-    console.log(this.songId);
+    //console.log(this.songId);
 
     this.service.retrieveSpecificTrack(this.songId).subscribe(result => {
       this.information = result;
 
       this.trackInfo = this.information.tracks[0];
+      console.log(this.trackInfo);
+      this.trackURL = this.information.tracks[0].url;
       this.service.isTrackLiked(this.trackInfo.id).subscribe(data => {
         console.log(Object.values(data));
         this.trackLiked = data.liked;
       });
+
     });
   }
 
@@ -80,5 +87,4 @@ export class MoreTrackComponent implements OnInit {
     });
     toast.present();
   }
-
 }
