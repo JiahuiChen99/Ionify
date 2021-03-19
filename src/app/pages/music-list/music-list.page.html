@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Music Searcher</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+    </section>
+  
+  <!--<ion-button color="primary" (click) = "button()">Primary</ion-button>-->
+  <ion-searchbar [(ngModel)]="trackName" mode="ios" (ionChange)="searchTrack()"></ion-searchbar>
+  
+  <ion-list class="list" color="transparent" lines="none">  
+    <ion-virtual-scroll [items]="tracks">
+      <ion-item-sliding (ionDrag)="openModal($event, item.name, slidingItem)" *virtualItem="let item" #slidingItem>
+        <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'music-details', item.name]">
+              
+          <ion-avatar class="list" color="none" slot="start">
+            <img [src]="item.thumbnail" onError="this.src='../assets/img/logo.png'" >
+          </ion-avatar>
+          
+          <ion-label color="none" class="list">
+            <h2><b>{{ item.name }}</b></h2>
+            <h4>{{ item.owner.login }}</h4>
+          </ion-label>
+          
+          <!--<ion-icon slot="end" name="musical-notes"></ion-icon>-->
+        </ion-item>
+  
+        <ion-item-options side="start">        
+          <ion-item-option color="transparent">
+            <ion-icon color="dark" slot="icon-only" name="logo-buffer"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-virtual-scroll>
+
+  </ion-list>
+
+  <div *ngIf="tracks == undefined">
+    <ion-item-sliding *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item item="item" class="list" color="transparent" button  mode="ios">
+            
+        <ion-avatar class="list" color="none" slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        
+        <ion-label color="none" class="list">
+          <h2><b><ion-skeleton-text animated style="width: 60%"></ion-skeleton-text></b></h2>
+          <h4><ion-skeleton-text animated style="width: 20%"></ion-skeleton-text></h4>
+        </ion-label>
+        
+        <!--<ion-icon slot="end" name="musical-notes"></ion-icon>-->
+      </ion-item>
+
+      <ion-item-options side="start">        
+        <ion-item-option color="transparent">
+          <ion-icon color="dark" slot="icon-only" name="logo-buffer"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed"  [routerLink]="['/', 'upload-track']">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+    
+

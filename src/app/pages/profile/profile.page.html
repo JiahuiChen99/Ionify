@@ -1,0 +1,79 @@
+<ion-content>
+  
+  <ion-refresher  class="spinner" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="danger"
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="dots"
+      refreshingText="Refreshing">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="header">
+    <h2>{{username}}</h2>
+
+    <div class="space-between">
+      <div class="followers">
+        <ion-chip outline="true" color="dark">{{followers}}</ion-chip>
+        <p>Followers</p>
+      </div>
+
+      <div class="likes">
+        <ion-chip outline="true" color="dark">{{following}}</ion-chip>
+        <p>Following</p>
+      </div>
+    </div>
+      
+    <div class="logo-position">
+      <div class="blue-ring">
+        <div class="white-ring">
+          <div class="profile-image">
+            <img [src]="profileImage" onError="this.src = 'https://res.cloudinary.com/yumenokko/image/upload/v1583577088/user_elytgp.jpg'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tracks-liked">
+    <ion-card>
+      <ion-item [routerLink]="['/', 'likes']" mode="ios" routerDirection="forward">
+        <h4>Tracks liked by you</h4>
+        <ion-button slot="end" fill="clear" color="">{{likesNum}}</ion-button>
+      </ion-item>
+
+      <ion-slides [options]="slideOpts" #slide>
+        <ion-slide  *ngFor="let item of likes" mode="ios" [routerLink]="['/', 'music-details', item.name]" routerDirection="forward">
+
+          <div class="imageStyle">
+            <img [src]="item.thumbnail" onError="this.src ='../assets/img/logo.png'">
+          </div>
+        
+        </ion-slide>
+      </ion-slides>
+      
+    </ion-card>
+  </div>
+
+  <div class="playlists">
+    <ion-card>
+      <ion-item mode="ios" [routerLink]="['/', 'playlists']" routerDirection="forward">
+        <h4>Playlists</h4>
+        <ion-button slot="end" fill="clear" color="">{{playlistsNum}}</ion-button>
+      </ion-item>
+
+      <ion-slides [options]="slideOpts" #slide>
+        <ion-slide  *ngFor="let item of playlists" [routerLink]="['/', 'playlistview', item.id]" routerDirection="forward">
+          
+            <img [src]="item.thumbnail" onError="this.src ='../assets/img/logo.png'">
+        
+        </ion-slide>
+      </ion-slides>
+      
+    </ion-card>
+    
+  </div>
+
+
+  <ion-button shape="round" expand="block" type="submit" fill="outline" color="primary" (click)="logout()">Logout</ion-button>
+</ion-content>

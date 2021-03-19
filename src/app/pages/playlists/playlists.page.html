@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Playlists</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+    </section>
+  
+  <ion-list class="list" color="transparent" lines="none">
+  
+    <ion-item-sliding *ngFor="let item of playlists">
+      <ion-item item="item" class="list" color="transparent" button  mode="ios" [routerLink]="['/', 'playlistview', item.id]">
+            
+        <ion-avatar class="list" color="none" slot="start">
+          <img [src]="item.thumbnail" onError="this.src='https://cdn3.iconfinder.com/data/icons/music-and-audio-1/26/music-audio-1027-512.png'" >
+        </ion-avatar>
+        
+        <ion-label color="none" class="list">
+          <h2><b>{{ item.name }}</b></h2>
+        </ion-label>
+        
+      </ion-item>
+
+      <ion-item-options side="start">        
+        <ion-item-option color="transparent">
+          <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+<div *ngIf="playlists == undefined">
+  <ion-list class="list" color="transparent" lines="none">
+  <ion-item-sliding *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]">
+    <ion-item item="item" class="list" color="transparent" button  mode="ios">
+      
+
+      <ion-avatar class="list" color="none" slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+    
+      
+      <ion-label color="none" class="list">
+        <h2><b><ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text></b></h2>
+      </ion-label>
+      
+    </ion-item>
+
+    <ion-item-options side="start">        
+      <ion-item-option color="transparent">
+        <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+</div>
+  
+
+</ion-content>

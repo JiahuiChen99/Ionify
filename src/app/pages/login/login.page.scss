@@ -1,0 +1,102 @@
+ion-content {
+    --ion-background-color: linear-gradient(rgb(130, 204, 161),#12D8FA, #acb6e5);
+}
+
+ion-item{
+    --ion-background-color: transparent !important;
+}
+
+ion-button{
+    --ion-background-color: transparent !important;
+}
+.center{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 10%;
+}
+
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-top: 60px;
+}
+
+
+section .wave{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(src/assets/img/wave.png);
+    background-size: 400px 100px;
+   
+   }
+   section .wave.wave1{
+    animation: animate 17s linear infinite;
+    z-index: 1000px;
+    opacity: 0.35;
+    animation-delay: 2s;
+    bottom: 0;
+   }
+   section .wave.wave2{
+    animation: animate2 15s linear infinite;
+    z-index: 999px;
+    opacity: 0.2;
+    animation-delay: -5s;
+    bottom: 0;
+   }
+   section .wave.wave3{
+    animation: animate 30s linear infinite;
+    z-index: 998px;
+    opacity: 0.1;
+    animation-delay: -5s;
+    bottom: 0;
+   }
+   section .wave.wave4{
+    animation: animate2 17s linear infinite;
+    z-index: 997px;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 0;
+   }
+   @keyframes animate{
+   0%{
+    background-position-x: 0;
+   }
+   100%{
+    background-position-x: 400px;
+   }
+   }
+   @keyframes animate2{
+   0%{
+    background-position-x: 0;
+   }
+   100%{
+    background-position-x: -400px;
+   }
+   }
+
+
+   .glow {
+    font-size: 50px;
+    top: 50%;
+    left: 50%;
+    padding-top: 200px;
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 3px #e60073, 0 0 4px #e60073, 0 0 5px #e60073, 0 0 6px #e60073, 0 0 7px #e60073;
+    }
+    to {
+      text-shadow: 0 0 4px #fff, 0 0 3px #ff4da6, 0 0 4px #ff4da6, 0 0 5px #ff4da6, 0 0 6px #ff4da6, 0 0 7px #ff4da6, 0 0 8px #ff4da6;
+    }
+  }
